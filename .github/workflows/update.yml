@@ -1,0 +1,36 @@
+name: Update Unrivaled Players Daily
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs daily at 6 AM UTC
+  workflow_dispatch: # Allows you to manually trigger it anytime from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Script
+        run: python get_players.py
+
+      - name: Commit and Push Updated Stats
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add players.js
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update Unrivaled players" && git push)

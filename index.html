@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unrivaled Game Hub</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap');
+    :root { --ink: #17222c; --muted: #71808b; --paper: #f3f1f7; --white: #fffdfb; --coral: #6d4cff; --coral-dark: #4f32d6; --mint: #b8e6d1; }
+    * { box-sizing: border-box; }
+    body { position: relative; width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 38px 0 80px; color: var(--ink); background: var(--paper); font-family: Manrope, sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .3; background-image: radial-gradient(#c3bfd0 1px, transparent 1px); background-size: 18px 18px; }
+    .wrap { position: relative; }
+    .eyebrow { margin: 0 0 8px; color: var(--coral-dark); font: 500 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font: 52px/1 'Archivo Black', sans-serif; text-transform: uppercase; letter-spacing: -.04em; }
+    .intro { max-width: 620px; margin: 18px 0 28px; color: var(--muted); font-size: 16px; line-height: 1.6; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 24px; }
+    .game-card { display: block; padding: 20px 18px 18px; border: 1px solid var(--ink); background: var(--white); box-shadow: 8px 8px 0 rgba(23,34,44,.08); text-decoration: none; color: var(--ink); transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+    a.game-card:hover { transform: translateY(-2px); border-color: var(--coral); box-shadow: 10px 10px 0 rgba(109,76,255,.14); }
+    .game-card.soon { opacity: .55; box-shadow: none; }
+    .badge { display: inline-block; padding: 4px 7px; border: 1px solid var(--ink); font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; background: var(--mint); color: var(--ink); }
+    .soon .badge { background: transparent; }
+    .game-card h2 { margin: 14px 0 8px; font: 28px/1.05 'Archivo Black', sans-serif; text-transform: uppercase; letter-spacing: -.04em; }
+    .game-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .fan-note { margin: 48px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; letter-spacing: .06em; }
+    .fan-note a { color: inherit; }
+    @media (max-width: 620px) { h1 { font-size: 40px; } .grid { grid-template-columns: 1fr; } .game-card { padding: 18px 16px 16px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">Unrivaled / game hub</p>
+    <h1>Pick your game.</h1>
+    <p class="intro">Games for fans of Unrivaled, the 3-on-3 league. Player data comes from the official Unrivaled player list and updates every night.</p>
+
+    <div class="grid">
+      <a class="game-card" href="flashcard.html">
+        <span class="badge">Game 01</span>
+        <h2>Face Match</h2>
+        <p>Six photos, six names. Put the right name on every Unrivaled player.</p>
+      </a>
+
+      <span class="game-card soon">
+        <span class="badge">Coming soon</span>
+        <h2>More games</h2>
+        <p>More games once the 2027 Unrivaled teams are announced.</p>
+      </span>
+    </div>
+
+    <p class="fan-note">Fan-made. Not affiliated with Unrivaled. Player photos from <a href="https://www.unrivaled.basketball/players">unrivaled.basketball</a>.</p>
+  </main>
+</body>
+</html>

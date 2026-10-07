@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unrivaled Face Match</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap');
+    :root { --ink: #17222c; --muted: #71808b; --paper: #f3f1f7; --white: #fffdfb; --coral: #6d4cff; --coral-dark: #4f32d6; --mint: #b8e6d1; --shadow: 0 14px 0 rgba(23,34,44,.08); }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--paper); font-family: Manrope, sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .3; background-image: radial-gradient(#c3bfd0 1px, transparent 1px); background-size: 18px 18px; }
+    main { position: relative; width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 58px; }
+    header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 42px; }
+    .kicker { margin: 0 0 8px; color: var(--coral-dark); font: 500 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 600px; margin: 0; font: 42px/1.02 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .intro { max-width: 340px; margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .scoreboard { display: flex; align-items: center; gap: 24px; padding: 14px 18px; border: 1px solid var(--ink); background: var(--white); box-shadow: 5px 5px 0 var(--ink); }
+    .score-number { font: 28px 'Archivo Black', sans-serif; }
+    .score-label { display: block; color: var(--muted); font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .game-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .game-bar h2 { margin: 0; font: 21px 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .round-label { color: var(--muted); font: 12px 'DM Mono', monospace; }
+    .board { display: grid; grid-template-columns: 1.3fr 1fr; gap: 26px; align-items: start; }
+    .column-title { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px; font: 11px 'DM Mono', monospace; letter-spacing: .09em; text-transform: uppercase; }
+    .column-title span { color: var(--muted); font-size: 10px; }
+    .faces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .names { display: grid; gap: 12px; }
+    .face-card, .name-card { width: 100%; border: 1px solid var(--ink); color: var(--ink); background: var(--white); box-shadow: var(--shadow); text-align: left; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; cursor: pointer; }
+    .face-card { display: grid; padding: 5px; }
+    .face-card img, .image-placeholder { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top center; background: var(--mint); }
+    .face-label { min-height: 22px; padding: 6px 4px 2px; color: #2d7d58; font: 10px/1.25 'DM Mono', monospace; text-transform: uppercase; }
+    .name-card { display: flex; align-items: center; min-height: 58px; padding: 0 18px; font: 800 15px Manrope, sans-serif; }
+    .name-copy { display: block; }
+    .face-card:hover:not(:disabled), .name-card:hover:not(:disabled) { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 rgba(23,34,44,.14); }
+    button { font: inherit; }
+    button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+    .face-card:disabled, .name-card:disabled { cursor: default; }
+    .face-card.matched, .name-card.matched { background: var(--mint); border-color: #5c9c7e; box-shadow: none; transform: none; }
+    .match-label { display: block; margin-top: 4px; color: #2d7d58; font: 10px 'DM Mono', monospace; line-height: 1.2; text-transform: uppercase; }
+    .name-card.wrong { background: #ffd8d1; border-color: #e0533f; animation: shake .3s ease; }
+    .face-card.selected { outline: 3px solid var(--coral); outline-offset: -1px; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(109,76,255,.22); }
+    .status { min-height: 28px; margin: 26px 0 0; color: var(--muted); font: 12px 'DM Mono', monospace; text-align: center; }
+    .status.success { color: #2d7d58; } .status.error { color: #b8392b; }
+    .new-round { display: block; margin: 8px auto 0; padding: 13px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--white); cursor: pointer; font: 800 13px Manrope, sans-serif; text-transform: uppercase; }
+    .new-round:hover { background: var(--coral); border-color: var(--coral); } .hidden { display: none; }
+    .result-panel { max-width: 360px; margin: 20px auto 0; padding: 16px; border: 1px solid var(--ink); background: var(--white); text-align: center; }
+    .result-heading { margin: 0 0 5px; font: 16px 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .result-summary { margin: 0 0 14px; color: var(--muted); font: 12px 'DM Mono', monospace; }
+    .result-button { padding: 10px 16px; border: 1px solid var(--coral); background: var(--coral); color: white; cursor: pointer; font: 800 12px Manrope, sans-serif; text-transform: uppercase; }
+    .result-button:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
+    .share-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .copy-button { border-color: var(--ink); background: var(--ink); }
+    .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
+    @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+    @media (max-width: 700px) { main { width: calc(100% - 32px); padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .board { grid-template-columns: 1fr; gap: 25px; } }
+    @media (max-width: 480px) { h1 { font-size: 30px; } .faces { gap: 8px; } .face-card { padding: 3px; } .name-card { min-height: 50px; padding: 0 14px; font-size: 14px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="site-menu"></div>
+    <header>
+      <div><p class="kicker">Unrivaled / 2027 season</p><h1>Name that face.</h1><p class="intro">Six Unrivaled players, six names. Tap a photo, then tap the name that goes with it.</p></div>
+      <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">matched</span></div><div><span id="streak" class="score-number">0</span><span class="score-label">streak</span></div></div>
+    </header>
+    <section aria-labelledby="round-title">
+      <div class="game-bar"><h2 id="round-title">Round one</h2><span id="roundLabel" class="round-label">06 matches</span></div>
+      <div class="board"><div><h3 class="column-title">Faces <span>select a photo</span></h3><div id="faceCards" class="faces"></div></div><div><h3 class="column-title">Names <span>then make a match</span></h3><div id="nameCards" class="names"></div></div></div>
+      <p id="status" class="status" role="status" aria-live="polite">Select a photo to get started.</p><button id="newRound" class="new-round hidden" type="button">Play another round</button>
+      <div id="resultPanel" class="result-panel"><h3 id="resultHeading" class="result-heading">Your score</h3><p id="resultSummary" class="result-summary">0 total matches  |  0 wrong guesses</p><div class="share-actions"><button id="shareButton" class="result-button" type="button">Share with link</button><button id="copyButton" class="result-button copy-button" type="button">Copy score</button></div></div>
+    </section>
+    <p class="fan-note">Fan-made game. Not affiliated with Unrivaled.</p>
+  </main>
+  <script src="players.js?v=1"></script>
+  <script>
+    const ROUND_SIZE = 6;
+    const faceCards = document.getElementById('faceCards');
+    const nameCards = document.getElementById('nameCards');
+    const status = document.getElementById('status');
+    const scoreDisplay = document.getElementById('score');
+    const streakDisplay = document.getElementById('streak');
+    const roundTitle = document.getElementById('round-title');
+    const newRoundButton = document.getElementById('newRound');
+    const resultPanel = document.getElementById('resultPanel');
+    const resultHeading = document.getElementById('resultHeading');
+    const resultSummary = document.getElementById('resultSummary');
+    const shareButton = document.getElementById('shareButton'); const copyButton = document.getElementById('copyButton');
+    let round = 0; let score = 0; let streak = 0; let selectedFace = null; let matched = 0; let totalMisses = 0;
+    function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
+    function choosePlayers() { return shuffle(allPlayers.filter(player => player.headshot)).slice(0, ROUND_SIZE); }
+    function detailLine(player) { return player.team || player.wnbaTeam || ''; }
+    function makeFaceCard(player, index) {
+      const card = document.createElement('button'); card.className = 'face-card'; card.type = 'button'; card.dataset.playerId = player.id;
+      card.setAttribute('aria-label', `Mystery player ${index + 1}`);
+      const image = document.createElement('img'); image.src = player.headshot; image.alt = `Mystery player ${index + 1}`;
+      image.onerror = () => { const placeholder = document.createElement('span'); placeholder.className = 'image-placeholder'; image.replaceWith(placeholder); };
+      const label = document.createElement('span'); label.className = 'face-label'; card.append(image, label);
+      card.addEventListener('click', () => selectFace(card, player)); return card;
+    }
+    function makeNameCard(player) {
+      const card = document.createElement('button'); card.className = 'name-card'; card.type = 'button'; card.dataset.playerId = player.id;
+      const copy = document.createElement('span'); copy.className = 'name-copy'; copy.textContent = player.name; card.append(copy);
+      card.addEventListener('click', () => selectName(card, player)); return card;
+    }
+    function selectFace(card, player) {
+      if (card.disabled || matched === ROUND_SIZE) return;
+      document.querySelectorAll('.face-card.selected').forEach(item => item.classList.remove('selected')); card.classList.add('selected'); selectedFace = { card, player };
+      status.textContent = 'Now pick the matching name.'; status.className = 'status';
+    }
+    function selectName(card, player) {
+      if (card.disabled || matched === ROUND_SIZE) return;
+      if (!selectedFace) { status.textContent = 'Pick a photo first.'; status.className = 'status'; return; }
+      if (selectedFace.player.id === player.id) {
+        selectedFace.card.classList.remove('selected'); selectedFace.card.classList.add('matched'); card.classList.add('matched');
+        selectedFace.card.querySelector('.face-label').textContent = player.name;
+        selectedFace.card.querySelector('img')?.setAttribute('alt', `${player.name} headshot`);
+        selectedFace.card.setAttribute('aria-label', player.name);
+        const detail = detailLine(player);
+        if (detail) { const label = document.createElement('small'); label.className = 'match-label'; label.textContent = detail; card.querySelector('.name-copy').appendChild(label); }
+        selectedFace.card.disabled = true; card.disabled = true;
+        matched += 1; score += 1; streak += 1; scoreDisplay.textContent = score; streakDisplay.textContent = streak; selectedFace = null;
+        status.textContent = matched === ROUND_SIZE ? 'Perfect round. You know your hoopers.' : 'That is the one. Keep going.'; status.className = 'status success';
+        if (matched === ROUND_SIZE) finishRound();
+      } else { card.classList.add('wrong'); totalMisses += 1; streak = 0; streakDisplay.textContent = streak; status.textContent = 'Not this time. Try another name.'; status.className = 'status error'; setTimeout(() => card.classList.remove('wrong'), 350); }
+    }
+    function finishRound() {
+      roundTitle.textContent = `Round ${round} complete`; newRoundButton.classList.remove('hidden'); document.getElementById('roundLabel').textContent = 'all matches made';
+      resultHeading.textContent = 'Round complete'; resultSummary.textContent = `${score} total matches  |  ${totalMisses} wrong guesses`;
+      resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function startRound() {
+      round += 1; matched = 0; selectedFace = null; const players = choosePlayers();
+      faceCards.replaceChildren(...players.map(makeFaceCard)); nameCards.replaceChildren(...shuffle(players).map(makeNameCard));
+      roundTitle.textContent = `Round ${round}`; document.getElementById('roundLabel').textContent = `${String(ROUND_SIZE).padStart(2, '0')} matches`; status.textContent = 'Select a photo to get started.'; status.className = 'status'; newRoundButton.classList.add('hidden'); resultHeading.textContent = 'Your score'; resultSummary.textContent = `${score} total matches  |  ${totalMisses} wrong guesses`; shareButton.textContent = 'Share with link'; copyButton.textContent = 'Copy score';
+    }
+    function scoreText(includeLink) { return `Unrivaled Face Match\n${score} total matches\n${'🟪'.repeat(matched)}${'⬜'.repeat(ROUND_SIZE - matched)}${includeLink ? `\n${location.href}` : ''}`; }
+    async function shareScore() { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Face Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); shareButton.textContent = 'Score shared'; } catch { shareButton.textContent = 'Share canceled'; } }
+    async function copyScore() { try { await navigator.clipboard.writeText(scoreText(false)); copyButton.textContent = 'Score copied'; } catch { copyButton.textContent = 'Copy unavailable'; } }
+    shareButton.addEventListener('click', shareScore); copyButton.addEventListener('click', copyScore);
+    newRoundButton.addEventListener('click', startRound); startRound();
+  </script>
+  <script src="menu.js"></script>
+</body>
+</html>
