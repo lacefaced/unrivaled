@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unrivaled Logo Match</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap');
+    :root { --ink: #17222c; --muted: #71808b; --paper: #f3f1f7; --white: #fffdfb; --coral: #6d4cff; --coral-dark: #4f32d6; --mint: #b8e6d1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--paper); font-family: Manrope, sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .3; background-image: radial-gradient(#c3bfd0 1px, transparent 1px); background-size: 18px 18px; }
+    main { position: relative; width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 58px; }
+    header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; }
+    .kicker { margin: 0 0 8px; color: var(--coral-dark); font: 500 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 600px; margin: 0; font: 42px/1.02 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .intro { max-width: 380px; margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .scoreboard { display: flex; align-items: center; gap: 24px; padding: 14px 18px; border: 1px solid var(--ink); background: var(--white); box-shadow: 5px 5px 0 var(--ink); }
+    .score-number { font: 28px 'Archivo Black', sans-serif; }
+    .score-label { display: block; color: var(--muted); font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .game-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .game-bar h2 { margin: 0; font: 21px 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .round-label { color: var(--muted); font: 12px 'DM Mono', monospace; }
+    .board { display: grid; grid-template-columns: minmax(220px, .9fr) minmax(260px, 1.1fr); gap: 26px; align-items: start; }
+    .column-title { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px; font: 11px 'DM Mono', monospace; letter-spacing: .09em; text-transform: uppercase; }
+    .column-title span { color: var(--muted); font-size: 10px; }
+    .cards { display: grid; gap: 10px; }
+    .logo-stage { display: grid; place-items: center; min-height: 340px; padding: 24px; border: 1px solid var(--ink); background: var(--white); box-shadow: 0 10px 0 rgba(23,34,44,.08); overflow: hidden; }
+    .logo { display: block; width: 200px; height: 200px; object-fit: contain; filter: blur(11px); }
+    .logo.revealed { filter: none; transition: filter .25s ease; }
+    .logo-fallback { display: grid; place-items: center; background: var(--mint); font: 800 28px 'DM Mono', monospace; }
+    button { font: inherit; }
+    button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+    .answer-card { display: flex; align-items: center; width: 100%; min-height: 58px; padding: 8px 18px; border: 1px solid var(--ink); color: var(--ink); background: var(--white); box-shadow: 0 8px 0 rgba(23,34,44,.08); text-align: left; cursor: pointer; font: 800 15px Manrope, sans-serif; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .answer-card:hover:not(:disabled) { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 rgba(23,34,44,.14); }
+    .answer-card:disabled { cursor: default; }
+    .answer-card.correct { background: var(--mint); border-color: #5c9c7e; box-shadow: none; transform: none; }
+    .answer-card.wrong { background: #ffd8d1; border-color: #e0533f; animation: shake .3s ease; }
+    .status { min-height: 28px; margin: 26px 0 0; color: var(--muted); font: 12px 'DM Mono', monospace; text-align: center; }
+    .status.success { color: #2d7d58; } .status.error { color: #b8392b; }
+    .result-button { padding: 10px 16px; border: 1px solid var(--coral); background: var(--coral); color: white; cursor: pointer; font: 800 12px Manrope, sans-serif; text-transform: uppercase; }
+    .result-button:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
+    .copy-button { border-color: var(--ink); background: var(--ink); }
+    .hidden { display: none; }
+    .game-over { max-width: 520px; margin: 0 auto; padding: 34px 28px 30px; border: 1px solid var(--ink); background: var(--white); box-shadow: 8px 8px 0 var(--ink); text-align: center; }
+    .final-score { margin: 6px 0 4px; font: 84px/1 'Archivo Black', sans-serif; letter-spacing: -.04em; }
+    #finalTotal { color: var(--muted); font-size: .5em; }
+    .final-misses { margin: 0 0 14px; color: var(--muted); font: 13px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .final-verdict { margin: 0 0 26px; font: 800 17px/1.4 Manrope, sans-serif; }
+    .final-share { display: grid; gap: 10px; }
+    .final-share .result-button { width: 100%; padding: 17px 20px; font-size: 16px; }
+    .play-again { margin-top: 28px; padding: 10px 16px; border: 1px solid var(--muted); background: transparent; color: var(--muted); cursor: pointer; font: 700 12px Manrope, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    .play-again:hover, .play-again.confirm { border-color: var(--ink); color: var(--ink); }
+    .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
+    @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+    @media (max-width: 700px) { main { padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .board { grid-template-columns: minmax(0, 1fr); gap: 20px; } .logo-stage { min-height: 220px; } .logo { width: 150px; height: 150px; filter: blur(8px); } }
+    @media (max-width: 480px) { h1 { font-size: 30px; } .answer-card { min-height: 50px; padding: 8px 14px; font-size: 14px; } .game-over { padding: 28px 18px 24px; box-shadow: 5px 5px 0 var(--ink); } .final-score { font-size: 64px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="site-menu"></div>
+    <header>
+      <div><p class="kicker">Unrivaled / club challenge</p><h1>Know your clubs.</h1><p class="intro">Eight blurry logos. Name the Unrivaled club behind each one.</p></div>
+      <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">correct</span></div><div><span id="misses" class="score-number">0</span><span class="score-label">misses</span></div></div>
+    </header>
+    <section id="playArea" aria-labelledby="gameTitle">
+      <div class="game-bar"><h2 id="gameTitle">Logo match</h2><span id="roundLabel" class="round-label"></span></div>
+      <div class="board"><div><h3 class="column-title">Logo <span>blurred</span></h3><div id="logoStage" class="logo-stage"></div></div><div><h3 class="column-title">Club name <span>one tap</span></h3><div id="answerCards" class="cards"></div></div></div>
+      <p id="status" class="status" role="status" aria-live="polite">Choose the correct club.</p>
+    </section>
+    <section id="gameOver" class="game-over hidden" aria-labelledby="final-heading">
+      <p class="kicker" id="final-heading">Game over / final score</p>
+      <p class="final-score"><span id="finalScore">0</span><span id="finalTotal">/8</span></p>
+      <p id="finalMisses" class="final-misses">0 misses</p>
+      <p id="finalVerdict" class="final-verdict"></p>
+      <div class="final-share"><button id="finalShare" class="result-button" type="button">Share your score</button><button id="finalCopy" class="result-button copy-button" type="button">Copy score</button></div>
+      <button id="playAgain" class="play-again" type="button">Play again</button>
+    </section>
+    <p class="fan-note">Fan-made game. Not affiliated with Unrivaled. Logos from <a href="https://www.unrivaled.basketball/standings" style="color:inherit">unrivaled.basketball</a>.</p>
+  </main>
+  <script>
+    // The eight Unrivaled clubs; logos are the official primary marks from unrivaled.basketball
+    const LOGO_ROOT = 'https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/teams';
+    const clubs = { 'Breeze': 'breeze', 'Hive': 'hive', 'Laces': 'laces', 'Lunar Owls': 'lunar-owls', 'Mist': 'mist', 'Phantom': 'phantom', 'Rose': 'rose', 'Vinyl': 'vinyl' };
+    const CHOICES = 5;
+    const logoStage = document.getElementById('logoStage'); const answerCards = document.getElementById('answerCards'); const status = document.getElementById('status');
+    const scoreDisplay = document.getElementById('score'); const missesDisplay = document.getElementById('misses');
+    const playArea = document.getElementById('playArea'); const gameOverPanel = document.getElementById('gameOver'); const playAgainButton = document.getElementById('playAgain');
+    const finalShare = document.getElementById('finalShare'); const finalCopy = document.getElementById('finalCopy');
+    const names = Object.keys(clubs);
+    let order = []; let questionIndex = 0; let currentClub = null; let questionAttempted = false; let score = 0; let misses = 0;
+    function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
+    function makeLogo(club) {
+      const image = document.createElement('img'); image.className = 'logo'; image.src = `${LOGO_ROOT}/${clubs[club]}/images/logo/primary.png`; image.alt = 'Mystery club logo';
+      image.onerror = () => { const fallback = document.createElement('span'); fallback.className = 'logo logo-fallback'; fallback.textContent = club.split(' ').map(word => word[0]).join(''); image.replaceWith(fallback); };
+      return image;
+    }
+    function makeAnswer(club) { const card = document.createElement('button'); card.className = 'answer-card'; card.type = 'button'; card.textContent = club; card.addEventListener('click', () => answer(card, club)); return card; }
+    function answer(card, club) {
+      if (card.disabled) return;
+      // Only the first tap on each logo counts toward the score
+      if (!questionAttempted) { questionAttempted = true; if (club === currentClub) { score += 1; scoreDisplay.textContent = score; } else { misses += 1; missesDisplay.textContent = misses; } }
+      if (club === currentClub) {
+        answerCards.querySelectorAll('button').forEach(button => { button.disabled = true; }); card.classList.add('correct');
+        const shownLogo = logoStage.querySelector('.logo'); if (shownLogo) { shownLogo.classList.add('revealed'); shownLogo.alt = `${club} logo`; }
+        status.textContent = questionIndex === order.length ? 'Correct. That was the last one.' : 'Correct. Next logo.'; status.className = 'status success';
+        setTimeout(nextQuestion, 900);
+      } else { card.classList.add('wrong'); card.disabled = true; status.textContent = 'Not quite. Try another club.'; status.className = 'status error'; }
+    }
+    function nextQuestion() {
+      if (questionIndex === order.length) return showGameOver();
+      currentClub = order[questionIndex]; questionAttempted = false; questionIndex += 1;
+      logoStage.replaceChildren(makeLogo(currentClub));
+      const options = shuffle([currentClub, ...shuffle(names.filter(club => club !== currentClub)).slice(0, CHOICES - 1)]);
+      answerCards.replaceChildren(...options.map(makeAnswer));
+      document.getElementById('roundLabel').textContent = `Logo ${questionIndex} of ${order.length}`; status.textContent = 'Choose the correct club.'; status.className = 'status';
+    }
+    function newGame() { order = shuffle(names); questionIndex = 0; score = 0; misses = 0; scoreDisplay.textContent = 0; missesDisplay.textContent = 0; nextQuestion(); }
+    function missText() { return `${misses} ${misses === 1 ? 'miss' : 'misses'}`; }
+    function showGameOver() {
+      document.getElementById('finalScore').textContent = score; document.getElementById('finalTotal').textContent = `/${order.length}`;
+      document.getElementById('finalMisses').textContent = missText();
+      document.getElementById('finalVerdict').textContent = score === order.length ? 'Every club on the first try. True Unrivaled fan.' : score >= order.length - 2 ? 'So close. You know this league.' : 'Time to watch a few more games.';
+      finalShare.textContent = 'Share your score'; finalCopy.textContent = 'Copy score'; resetPlayAgain();
+      playArea.classList.add('hidden'); gameOverPanel.classList.remove('hidden');
+      gameOverPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Play again takes two taps so a stray tap can't wipe the final score
+    let playAgainTimer = null;
+    function resetPlayAgain() { clearTimeout(playAgainTimer); playAgainButton.textContent = 'Play again'; playAgainButton.classList.remove('confirm'); }
+    function playAgain() {
+      if (!playAgainButton.classList.contains('confirm')) { playAgainButton.textContent = 'Tap again to start over'; playAgainButton.classList.add('confirm'); playAgainTimer = setTimeout(resetPlayAgain, 4000); return; }
+      resetPlayAgain(); gameOverPanel.classList.add('hidden'); playArea.classList.remove('hidden'); newGame(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function scoreText(includeLink) { return `Unrivaled Logo Match\n${score}/${order.length} clubs on the first try\n${missText()}${includeLink ? `\n${location.href}` : ''}`; }
+    async function shareScore(button) { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Logo Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); button.textContent = navigator.share ? 'Score shared' : 'Link copied'; } catch { button.textContent = 'Share canceled'; } }
+    async function copyScore(button) { try { await navigator.clipboard.writeText(scoreText(false)); button.textContent = 'Score copied'; } catch { button.textContent = 'Copy unavailable'; } }
+    finalShare.addEventListener('click', () => shareScore(finalShare)); finalCopy.addEventListener('click', () => copyScore(finalCopy));
+    playAgainButton.addEventListener('click', playAgain);
+    newGame();
+  </script>
+  <script src="menu.js"></script>
+</body>
+</html>

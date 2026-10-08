@@ -2,7 +2,8 @@
 (function () {
   var ITEMS = [
     { f: 'index.html', l: 'Hub' },
-    { f: 'flashcard.html', l: '01 / Face Match' }
+    { f: 'flashcard.html', l: '01 / Face Match' },
+    { f: 'teams.html', l: '02 / Logo Match' }
   ];
 
   var CSS = [
