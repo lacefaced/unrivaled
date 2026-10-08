@@ -76,6 +76,32 @@
   <script src="players.js?v=1"></script>
   <script>
     const ROUND_SIZE = 6;
+    const PERFECT_LINES = [
+      'Perfect round. You know your hoopers.',
+      'Clean sheet. Not a single miss.',
+      'Flawless. Somebody watches every game.',
+      'Nothing but net. Every single one.',
+      'Perfect round. Are you a scout?',
+      'No misses. That was a clinic.',
+      'Perfect round. Ice in your veins.',
+      'Spotless. You could call these games.',
+      'All right on the first try. Courtside regular.',
+      'Perfect round. Put that on the highlight reel.'
+    ];
+    const ROUND_DONE_LINES = [
+      'Round complete. Shake off the misses.',
+      'Got there in the end. Next one is yours.',
+      'Every name in place. On to the next.',
+      'Round done. A few bricks, but you closed it out.',
+      'Finished strong. Keep the streak alive next round.',
+      'That round is in the books.',
+      'Round complete. Short memory, next play.',
+      'All matched. Run it back.',
+      'Done. Not pretty, but a win is a win.',
+      'Round complete. You are heating up.'
+    ];
+    let lastLine = '';
+    function pickLine(lines) { const options = lines.filter(line => line !== lastLine); lastLine = options[Math.floor(Math.random() * options.length)]; return lastLine; }
     const faceCards = document.getElementById('faceCards');
     const nameCards = document.getElementById('nameCards');
     const status = document.getElementById('status');
@@ -88,7 +114,7 @@
     const resultSummary = document.getElementById('resultSummary');
     const shareButton = document.getElementById('shareButton'); const copyButton = document.getElementById('copyButton');
     let deck = []; let roundSizes = []; let roundSize = ROUND_SIZE;
-    let round = 0; let score = 0; let streak = 0; let selectedFace = null; let matched = 0; let totalMisses = 0;
+    let roundMisses = 0; let round = 0; let score = 0; let streak = 0; let selectedFace = null; let matched = 0; let totalMisses = 0;
     function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
     function newGame() {
       deck = shuffle(allPlayers.filter(player => player.headshot));
@@ -130,9 +156,9 @@
         if (detail) { const label = document.createElement('small'); label.className = 'match-label'; label.textContent = detail; card.querySelector('.name-copy').appendChild(label); }
         selectedFace.card.disabled = true; card.disabled = true;
         matched += 1; score += 1; streak += 1; scoreDisplay.textContent = score; streakDisplay.textContent = streak; selectedFace = null;
-        status.textContent = matched === roundSize ? 'Perfect round. You know your hoopers.' : 'That is the one. Keep going.'; status.className = 'status success';
+        status.textContent = matched === roundSize ? pickLine(roundMisses === 0 ? PERFECT_LINES : ROUND_DONE_LINES) : 'That is the one. Keep going.'; status.className = 'status success';
         if (matched === roundSize) finishRound();
-      } else { card.classList.add('wrong'); totalMisses += 1; streak = 0; streakDisplay.textContent = streak; status.textContent = 'Not this time. Try another name.'; status.className = 'status error'; setTimeout(() => card.classList.remove('wrong'), 350); }
+      } else { card.classList.add('wrong'); totalMisses += 1; roundMisses += 1; streak = 0; streakDisplay.textContent = streak; status.textContent = 'Not this time. Try another name.'; status.className = 'status error'; setTimeout(() => card.classList.remove('wrong'), 350); }
     }
     function finishRound() {
       const gameOver = round === roundSizes.length;
@@ -143,12 +169,12 @@
       resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     function startRound() {
-      const players = choosePlayers(); roundSize = players.length; round += 1; matched = 0; selectedFace = null;
+      const players = choosePlayers(); roundSize = players.length; round += 1; matched = 0; roundMisses = 0; selectedFace = null;
       faceCards.replaceChildren(...players.map(makeFaceCard)); nameCards.replaceChildren(...shuffle(players).map(makeNameCard));
       roundTitle.textContent = `Round ${round} of ${roundSizes.length}`; document.getElementById('roundLabel').textContent = `${String(roundSize).padStart(2, '0')} matches`; status.textContent = 'Select a photo to get started.'; status.className = 'status'; newRoundButton.classList.add('hidden'); resultHeading.textContent = 'Your score'; resultSummary.textContent = summaryText(); shareButton.textContent = 'Share with link'; copyButton.textContent = 'Copy score';
     }
-    function summaryText() { return `${score} of ${deck.length} players  |  ${totalMisses} wrong guesses`; }
-    function scoreText(includeLink) { return `Unrivaled Face Match\n${score}/${deck.length} players matched\n${totalMisses} wrong guesses${includeLink ? `\n${location.href}` : ''}`; }
+    function summaryText() { return `${score} of ${deck.length} players  |  ${totalMisses} wrong ${totalMisses === 1 ? 'guess' : 'guesses'}`; }
+    function scoreText(includeLink) { return `Unrivaled Face Match\n${score}/${deck.length} players matched\n${totalMisses} wrong ${totalMisses === 1 ? 'guess' : 'guesses'}${includeLink ? `\n${location.href}` : ''}`; }
     async function shareScore() { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Face Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); shareButton.textContent = 'Score shared'; } catch { shareButton.textContent = 'Share canceled'; } }
     async function copyScore() { try { await navigator.clipboard.writeText(scoreText(false)); copyButton.textContent = 'Score copied'; } catch { copyButton.textContent = 'Copy unavailable'; } }
     shareButton.addEventListener('click', shareScore); copyButton.addEventListener('click', copyScore);

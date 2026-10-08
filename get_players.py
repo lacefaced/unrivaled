@@ -1,6 +1,6 @@
 """Build players.js from Unrivaled's official players page.
 
-Unrivaled has no public API, so this reads the player table on
+Unrivaled has no free API (Sportradar sells one, but it's a paid B2B feed), so this reads the player table on
 https://www.unrivaled.basketball/players. Players without an Unrivaled photo
 borrow their ESPN headshot from the sibling WNBA site's players.js.
 """
