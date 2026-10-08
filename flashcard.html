@@ -22,7 +22,7 @@
     .game-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .game-bar h2 { margin: 0; font: 21px 'Archivo Black', sans-serif; text-transform: uppercase; }
     .round-label { color: var(--muted); font: 12px 'DM Mono', monospace; }
-    .board { display: grid; grid-template-columns: 1.3fr 1fr; gap: 26px; align-items: start; }
+    .board { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 380px); justify-content: center; gap: 32px; align-items: start; }
     .column-title { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px; font: 11px 'DM Mono', monospace; letter-spacing: .09em; text-transform: uppercase; }
     .column-title span { color: var(--muted); font-size: 10px; }
     .faces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -54,7 +54,7 @@
     .copy-button { border-color: var(--ink); background: var(--ink); }
     .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
     @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
-    @media (max-width: 700px) { main { width: calc(100% - 32px); padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .board { grid-template-columns: 1fr; gap: 25px; } }
+    @media (max-width: 700px) { main { width: calc(100% - 32px); padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .board { grid-template-columns: minmax(0, 1fr); gap: 25px; } .faces { max-width: 380px; } }
     @media (max-width: 480px) { h1 { font-size: 30px; } .faces { gap: 8px; } .face-card { padding: 3px; } .name-card { min-height: 50px; padding: 0 14px; font-size: 14px; } }
   </style>
 </head>
@@ -62,13 +62,13 @@
   <main>
     <div id="site-menu"></div>
     <header>
-      <div><p class="kicker">Unrivaled / 2027 season</p><h1>Name that face.</h1><p class="intro">Six Unrivaled players, six names. Tap a photo, then tap the name that goes with it.</p></div>
+      <div><p class="kicker">Unrivaled / 2027 season</p><h1>Name that face.</h1><p class="intro">Every Unrivaled player, a few at a time. Tap a photo, then tap the name that goes with it.</p></div>
       <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">matched</span></div><div><span id="streak" class="score-number">0</span><span class="score-label">streak</span></div></div>
     </header>
     <section aria-labelledby="round-title">
       <div class="game-bar"><h2 id="round-title">Round one</h2><span id="roundLabel" class="round-label">06 matches</span></div>
       <div class="board"><div><h3 class="column-title">Faces <span>select a photo</span></h3><div id="faceCards" class="faces"></div></div><div><h3 class="column-title">Names <span>then make a match</span></h3><div id="nameCards" class="names"></div></div></div>
-      <p id="status" class="status" role="status" aria-live="polite">Select a photo to get started.</p><button id="newRound" class="new-round hidden" type="button">Play another round</button>
+      <p id="status" class="status" role="status" aria-live="polite">Select a photo to get started.</p><button id="newRound" class="new-round hidden" type="button">Next round</button>
       <div id="resultPanel" class="result-panel"><h3 id="resultHeading" class="result-heading">Your score</h3><p id="resultSummary" class="result-summary">0 total matches  |  0 wrong guesses</p><div class="share-actions"><button id="shareButton" class="result-button" type="button">Share with link</button><button id="copyButton" class="result-button copy-button" type="button">Copy score</button></div></div>
     </section>
     <p class="fan-note">Fan-made game. Not affiliated with Unrivaled.</p>
@@ -87,9 +87,18 @@
     const resultHeading = document.getElementById('resultHeading');
     const resultSummary = document.getElementById('resultSummary');
     const shareButton = document.getElementById('shareButton'); const copyButton = document.getElementById('copyButton');
+    let deck = []; let roundSizes = []; let roundSize = ROUND_SIZE;
     let round = 0; let score = 0; let streak = 0; let selectedFace = null; let matched = 0; let totalMisses = 0;
     function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
-    function choosePlayers() { return shuffle(allPlayers.filter(player => player.headshot)).slice(0, ROUND_SIZE); }
+    function newGame() {
+      deck = shuffle(allPlayers.filter(player => player.headshot));
+      // Split the deck into even-ish rounds so the last one isn't tiny (50 players -> 6,6,6,6,6,5,5,5,5)
+      const rounds = Math.ceil(deck.length / ROUND_SIZE);
+      roundSizes = Array.from({ length: rounds }, (_, i) => Math.floor(deck.length / rounds) + (i < deck.length % rounds ? 1 : 0));
+      round = 0; score = 0; streak = 0; totalMisses = 0; scoreDisplay.textContent = score; streakDisplay.textContent = streak;
+      startRound();
+    }
+    function choosePlayers() { const start = roundSizes.slice(0, round).reduce((sum, size) => sum + size, 0); return deck.slice(start, start + roundSizes[round]); }
     function detailLine(player) { return player.team || player.wnbaTeam || ''; }
     function makeFaceCard(player, index) {
       const card = document.createElement('button'); card.className = 'face-card'; card.type = 'button'; card.dataset.playerId = player.id;
@@ -105,12 +114,12 @@
       card.addEventListener('click', () => selectName(card, player)); return card;
     }
     function selectFace(card, player) {
-      if (card.disabled || matched === ROUND_SIZE) return;
+      if (card.disabled || matched === roundSize) return;
       document.querySelectorAll('.face-card.selected').forEach(item => item.classList.remove('selected')); card.classList.add('selected'); selectedFace = { card, player };
       status.textContent = 'Now pick the matching name.'; status.className = 'status';
     }
     function selectName(card, player) {
-      if (card.disabled || matched === ROUND_SIZE) return;
+      if (card.disabled || matched === roundSize) return;
       if (!selectedFace) { status.textContent = 'Pick a photo first.'; status.className = 'status'; return; }
       if (selectedFace.player.id === player.id) {
         selectedFace.card.classList.remove('selected'); selectedFace.card.classList.add('matched'); card.classList.add('matched');
@@ -121,25 +130,29 @@
         if (detail) { const label = document.createElement('small'); label.className = 'match-label'; label.textContent = detail; card.querySelector('.name-copy').appendChild(label); }
         selectedFace.card.disabled = true; card.disabled = true;
         matched += 1; score += 1; streak += 1; scoreDisplay.textContent = score; streakDisplay.textContent = streak; selectedFace = null;
-        status.textContent = matched === ROUND_SIZE ? 'Perfect round. You know your hoopers.' : 'That is the one. Keep going.'; status.className = 'status success';
-        if (matched === ROUND_SIZE) finishRound();
+        status.textContent = matched === roundSize ? 'Perfect round. You know your hoopers.' : 'That is the one. Keep going.'; status.className = 'status success';
+        if (matched === roundSize) finishRound();
       } else { card.classList.add('wrong'); totalMisses += 1; streak = 0; streakDisplay.textContent = streak; status.textContent = 'Not this time. Try another name.'; status.className = 'status error'; setTimeout(() => card.classList.remove('wrong'), 350); }
     }
     function finishRound() {
-      roundTitle.textContent = `Round ${round} complete`; newRoundButton.classList.remove('hidden'); document.getElementById('roundLabel').textContent = 'all matches made';
-      resultHeading.textContent = 'Round complete'; resultSummary.textContent = `${score} total matches  |  ${totalMisses} wrong guesses`;
+      const gameOver = round === roundSizes.length;
+      roundTitle.textContent = gameOver ? 'Game over' : `Round ${round} complete`; newRoundButton.classList.remove('hidden'); document.getElementById('roundLabel').textContent = gameOver ? `all ${deck.length} players matched` : 'all matches made';
+      newRoundButton.textContent = gameOver ? 'Play again' : 'Next round';
+      if (gameOver) { status.textContent = totalMisses === 0 ? `Every player, zero misses. Flawless.` : `That's everyone. ${deck.length} players matched.`; status.className = 'status success'; }
+      resultHeading.textContent = gameOver ? 'Final score' : 'Round complete'; resultSummary.textContent = summaryText();
       resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     function startRound() {
-      round += 1; matched = 0; selectedFace = null; const players = choosePlayers();
+      const players = choosePlayers(); roundSize = players.length; round += 1; matched = 0; selectedFace = null;
       faceCards.replaceChildren(...players.map(makeFaceCard)); nameCards.replaceChildren(...shuffle(players).map(makeNameCard));
-      roundTitle.textContent = `Round ${round}`; document.getElementById('roundLabel').textContent = `${String(ROUND_SIZE).padStart(2, '0')} matches`; status.textContent = 'Select a photo to get started.'; status.className = 'status'; newRoundButton.classList.add('hidden'); resultHeading.textContent = 'Your score'; resultSummary.textContent = `${score} total matches  |  ${totalMisses} wrong guesses`; shareButton.textContent = 'Share with link'; copyButton.textContent = 'Copy score';
+      roundTitle.textContent = `Round ${round} of ${roundSizes.length}`; document.getElementById('roundLabel').textContent = `${String(roundSize).padStart(2, '0')} matches`; status.textContent = 'Select a photo to get started.'; status.className = 'status'; newRoundButton.classList.add('hidden'); resultHeading.textContent = 'Your score'; resultSummary.textContent = summaryText(); shareButton.textContent = 'Share with link'; copyButton.textContent = 'Copy score';
     }
-    function scoreText(includeLink) { return `Unrivaled Face Match\n${score} total matches\n${'🟪'.repeat(matched)}${'⬜'.repeat(ROUND_SIZE - matched)}${includeLink ? `\n${location.href}` : ''}`; }
+    function summaryText() { return `${score} of ${deck.length} players  |  ${totalMisses} wrong guesses`; }
+    function scoreText(includeLink) { return `Unrivaled Face Match\n${score}/${deck.length} players matched\n${totalMisses} wrong guesses${includeLink ? `\n${location.href}` : ''}`; }
     async function shareScore() { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Face Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); shareButton.textContent = 'Score shared'; } catch { shareButton.textContent = 'Share canceled'; } }
     async function copyScore() { try { await navigator.clipboard.writeText(scoreText(false)); copyButton.textContent = 'Score copied'; } catch { copyButton.textContent = 'Copy unavailable'; } }
     shareButton.addEventListener('click', shareScore); copyButton.addEventListener('click', copyScore);
-    newRoundButton.addEventListener('click', startRound); startRound();
+    newRoundButton.addEventListener('click', () => (round === roundSizes.length ? newGame() : startRound())); newGame();
   </script>
   <script src="menu.js"></script>
 </body>
