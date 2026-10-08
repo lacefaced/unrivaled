@@ -96,6 +96,15 @@
       STL: { total: 'had the most total steals', perGame: 'averaged the most steals per game', did: 'had', noun: 'steals' },
       MIN: { total: 'played the most total minutes', perGame: 'averaged the most minutes per game', did: 'played', noun: 'minutes' }
     };
+    // Hand-written questions for moments the stat leaderboards don't capture. Each fact is checked against unrivaled.basketball.
+    const SPOTLIGHT_QUESTIONS = [
+      {
+        key: 'mabrey-47-philly', tag: '2026 / record book',
+        text: 'Marina Mabrey set Unrivaled\'s single-game scoring record in Philadelphia on Jan. 30, 2026. How many points did she score?',
+        answer: '47 points', options: ['47 points', '41 points', '44 points', '50 points'],
+        fact: 'Mabrey scored 47 on 18-of-28 shooting in Lunar Owls\' 85-75 win over Rose. She also set league records for 3-pointers in a game (10) and first-quarter points (27).'
+      }
+    ];
     const TAGS = { PTS: 'scoring', AST: 'assists', '3PM': '3-pointers', GW: 'clutch', REB: 'rebounding', BLK: 'blocks', STL: 'steals', MIN: 'minutes' };
     const questionTag = document.getElementById('questionTag'); const questionText = document.getElementById('question'); const answerCards = document.getElementById('answerCards');
     const verdict = document.getElementById('verdict'); const fact = document.getElementById('fact'); const nextButton = document.getElementById('nextButton');
@@ -140,6 +149,7 @@
           bank.push({ key: `${season}-standings-${q.text}`, tag: `${season} / standings`, text: `${q.text} in ${season}?`, answer: winners[0].team, options: [winners[0].team, ...shuffle(others).slice(0, CHOICES - 1)], fact: q.fact(winners[0]) });
         });
       });
+      SPOTLIGHT_QUESTIONS.forEach(q => bank.push({ ...q }));
       return bank;
     }
     // One question per season+stat per game, so per-game and total versions of the same stat don't both show up
