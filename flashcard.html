@@ -52,6 +52,16 @@
     .result-button:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
     .share-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
     .copy-button { border-color: var(--ink); background: var(--ink); }
+    .game-over { max-width: 520px; margin: 0 auto; padding: 34px 28px 30px; border: 1px solid var(--ink); background: var(--white); box-shadow: 8px 8px 0 var(--ink); text-align: center; }
+    .final-score { margin: 6px 0 4px; font: 84px/1 'Archivo Black', sans-serif; letter-spacing: -.04em; }
+    #finalTotal { color: var(--muted); font-size: .5em; }
+    .final-misses { margin: 0 0 14px; color: var(--muted); font: 13px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .final-verdict { margin: 0 0 26px; font: 800 17px/1.4 Manrope, sans-serif; }
+    .final-share { display: grid; gap: 10px; }
+    .final-share .result-button { width: 100%; padding: 17px 20px; font-size: 16px; }
+    .play-again { margin-top: 28px; padding: 10px 16px; border: 1px solid var(--muted); background: transparent; color: var(--muted); cursor: pointer; font: 700 12px Manrope, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    .play-again:hover, .play-again.confirm { border-color: var(--ink); color: var(--ink); }
+    @media (max-width: 480px) { .game-over { padding: 28px 18px 24px; box-shadow: 5px 5px 0 var(--ink); } .final-score { font-size: 64px; } }
     .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
     @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
     @media (max-width: 700px) { main { width: calc(100% - 32px); padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .board { grid-template-columns: minmax(0, 1fr); gap: 25px; } .faces { max-width: 380px; } }
@@ -65,11 +75,19 @@
       <div><p class="kicker">Unrivaled / 2027 season</p><h1>Name that face.</h1><p class="intro">Every Unrivaled player, a few at a time. Tap a photo, then tap the name that goes with it.</p></div>
       <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">matched</span></div><div><span id="streak" class="score-number">0</span><span class="score-label">streak</span></div></div>
     </header>
-    <section aria-labelledby="round-title">
+    <section id="playArea" aria-labelledby="round-title">
       <div class="game-bar"><h2 id="round-title">Round one</h2><span id="roundLabel" class="round-label">06 matches</span></div>
       <div class="board"><div><h3 class="column-title">Faces <span>select a photo</span></h3><div id="faceCards" class="faces"></div></div><div><h3 class="column-title">Names <span>then make a match</span></h3><div id="nameCards" class="names"></div></div></div>
       <p id="status" class="status" role="status" aria-live="polite">Select a photo to get started.</p><button id="newRound" class="new-round hidden" type="button">Next round</button>
       <div id="resultPanel" class="result-panel"><h3 id="resultHeading" class="result-heading">Your score</h3><p id="resultSummary" class="result-summary">0 total matches  |  0 wrong guesses</p><div class="share-actions"><button id="shareButton" class="result-button" type="button">Share with link</button><button id="copyButton" class="result-button copy-button" type="button">Copy score</button></div></div>
+    </section>
+    <section id="gameOver" class="game-over hidden" aria-labelledby="final-heading">
+      <p class="kicker" id="final-heading">Game over / final score</p>
+      <p class="final-score"><span id="finalScore">0</span><span id="finalTotal">/50</span></p>
+      <p id="finalMisses" class="final-misses">0 wrong guesses</p>
+      <p id="finalVerdict" class="final-verdict"></p>
+      <div class="final-share"><button id="finalShare" class="result-button" type="button">Share your score</button><button id="finalCopy" class="result-button copy-button" type="button">Copy score</button></div>
+      <button id="playAgain" class="play-again" type="button">Play again</button>
     </section>
     <p class="fan-note">Fan-made game. Not affiliated with Unrivaled.</p>
   </main>
@@ -112,6 +130,8 @@
     const resultPanel = document.getElementById('resultPanel');
     const resultHeading = document.getElementById('resultHeading');
     const resultSummary = document.getElementById('resultSummary');
+    const playArea = document.getElementById('playArea'); const gameOverPanel = document.getElementById('gameOver'); const playAgainButton = document.getElementById('playAgain');
+    const finalShare = document.getElementById('finalShare'); const finalCopy = document.getElementById('finalCopy');
     const shareButton = document.getElementById('shareButton'); const copyButton = document.getElementById('copyButton');
     let deck = []; let roundSizes = []; let roundSize = ROUND_SIZE;
     let roundMisses = 0; let round = 0; let score = 0; let streak = 0; let selectedFace = null; let matched = 0; let totalMisses = 0;
@@ -162,23 +182,42 @@
     }
     function finishRound() {
       const gameOver = round === roundSizes.length;
+      if (gameOver) { showGameOver(); return; }
       roundTitle.textContent = gameOver ? 'Game over' : `Round ${round} complete`; newRoundButton.classList.remove('hidden'); document.getElementById('roundLabel').textContent = gameOver ? `all ${deck.length} players matched` : 'all matches made';
       newRoundButton.textContent = gameOver ? 'Play again' : 'Next round';
       if (gameOver) { status.textContent = totalMisses === 0 ? `Every player, zero misses. Flawless.` : `That's everyone. ${deck.length} players matched.`; status.className = 'status success'; }
       resultHeading.textContent = gameOver ? 'Final score' : 'Round complete'; resultSummary.textContent = summaryText();
       resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+    function showGameOver() {
+      document.getElementById('finalScore').textContent = score; document.getElementById('finalTotal').textContent = `/${deck.length}`;
+      document.getElementById('finalMisses').textContent = missText();
+      document.getElementById('finalVerdict').textContent = totalMisses === 0 ? 'Every player, zero misses. Flawless.' : totalMisses <= 5 ? `All ${deck.length} players matched. Nearly flawless.` : `That's everyone. All ${deck.length} players matched.`;
+      finalShare.textContent = 'Share your score'; finalCopy.textContent = 'Copy score'; resetPlayAgain();
+      playArea.classList.add('hidden'); gameOverPanel.classList.remove('hidden');
+      gameOverPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Play again takes two taps so a stray tap can't wipe the final score
+    let playAgainTimer = null;
+    function resetPlayAgain() { clearTimeout(playAgainTimer); playAgainButton.textContent = 'Play again'; playAgainButton.classList.remove('confirm'); }
+    function playAgain() {
+      if (!playAgainButton.classList.contains('confirm')) { playAgainButton.textContent = 'Tap again to start over'; playAgainButton.classList.add('confirm'); playAgainTimer = setTimeout(resetPlayAgain, 4000); return; }
+      resetPlayAgain(); gameOverPanel.classList.add('hidden'); playArea.classList.remove('hidden'); newGame(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     function startRound() {
       const players = choosePlayers(); roundSize = players.length; round += 1; matched = 0; roundMisses = 0; selectedFace = null;
       faceCards.replaceChildren(...players.map(makeFaceCard)); nameCards.replaceChildren(...shuffle(players).map(makeNameCard));
       roundTitle.textContent = `Round ${round} of ${roundSizes.length}`; document.getElementById('roundLabel').textContent = `${String(roundSize).padStart(2, '0')} matches`; status.textContent = 'Select a photo to get started.'; status.className = 'status'; newRoundButton.classList.add('hidden'); resultHeading.textContent = 'Your score'; resultSummary.textContent = summaryText(); shareButton.textContent = 'Share with link'; copyButton.textContent = 'Copy score';
     }
-    function summaryText() { return `${score} of ${deck.length} players  |  ${totalMisses} wrong ${totalMisses === 1 ? 'guess' : 'guesses'}`; }
-    function scoreText(includeLink) { return `Unrivaled Face Match\n${score}/${deck.length} players matched\n${totalMisses} wrong ${totalMisses === 1 ? 'guess' : 'guesses'}${includeLink ? `\n${location.href}` : ''}`; }
-    async function shareScore() { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Face Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); shareButton.textContent = 'Score shared'; } catch { shareButton.textContent = 'Share canceled'; } }
-    async function copyScore() { try { await navigator.clipboard.writeText(scoreText(false)); copyButton.textContent = 'Score copied'; } catch { copyButton.textContent = 'Copy unavailable'; } }
-    shareButton.addEventListener('click', shareScore); copyButton.addEventListener('click', copyScore);
-    newRoundButton.addEventListener('click', () => (round === roundSizes.length ? newGame() : startRound())); newGame();
+    function missText() { return `${totalMisses} wrong ${totalMisses === 1 ? 'guess' : 'guesses'}`; }
+    function summaryText() { return `${score} of ${deck.length} players  |  ${missText()}`; }
+    function scoreText(includeLink) { return `Unrivaled Face Match\n${score}/${deck.length} players matched\n${missText()}${includeLink ? `\n${location.href}` : ''}`; }
+    async function shareScore(button) { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Face Match', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); button.textContent = navigator.share ? 'Score shared' : 'Link copied'; } catch { button.textContent = 'Share canceled'; } }
+    async function copyScore(button) { try { await navigator.clipboard.writeText(scoreText(false)); button.textContent = 'Score copied'; } catch { button.textContent = 'Copy unavailable'; } }
+    shareButton.addEventListener('click', () => shareScore(shareButton)); copyButton.addEventListener('click', () => copyScore(copyButton));
+    finalShare.addEventListener('click', () => shareScore(finalShare)); finalCopy.addEventListener('click', () => copyScore(finalCopy));
+    playAgainButton.addEventListener('click', playAgain);
+    newRoundButton.addEventListener('click', startRound); newGame();
   </script>
   <script src="menu.js"></script>
 </body>
