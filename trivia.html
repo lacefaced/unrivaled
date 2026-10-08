@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unrivaled Trivia</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap');
+    :root { --ink: #17222c; --muted: #71808b; --paper: #f3f1f7; --white: #fffdfb; --coral: #6d4cff; --coral-dark: #4f32d6; --mint: #b8e6d1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--paper); font-family: Manrope, sans-serif; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .3; background-image: radial-gradient(#c3bfd0 1px, transparent 1px); background-size: 18px 18px; }
+    main { position: relative; width: min(820px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 58px; }
+    header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; }
+    .kicker { margin: 0 0 8px; color: var(--coral-dark); font: 500 12px 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 600px; margin: 0; font: 42px/1.02 'Archivo Black', sans-serif; text-transform: uppercase; }
+    .intro { max-width: 380px; margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .scoreboard { display: flex; align-items: center; gap: 24px; padding: 14px 18px; border: 1px solid var(--ink); background: var(--white); box-shadow: 5px 5px 0 var(--ink); }
+    .score-number { font: 28px 'Archivo Black', sans-serif; }
+    .score-label { display: block; color: var(--muted); font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .game-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .tag { display: inline-block; padding: 4px 7px; border: 1px solid var(--ink); background: var(--mint); font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .round-label { color: var(--muted); font: 12px 'DM Mono', monospace; }
+    .question { margin: 0 0 22px; font: 800 26px/1.3 Manrope, sans-serif; }
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    button { font: inherit; }
+    button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+    .answer-card { display: flex; align-items: center; width: 100%; min-height: 64px; padding: 10px 18px; border: 1px solid var(--ink); color: var(--ink); background: var(--white); box-shadow: 0 8px 0 rgba(23,34,44,.08); text-align: left; cursor: pointer; font: 800 16px Manrope, sans-serif; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .answer-card:hover:not(:disabled) { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 rgba(23,34,44,.14); }
+    .answer-card:disabled { cursor: default; }
+    .answer-card.correct { background: var(--mint); border-color: #5c9c7e; box-shadow: none; transform: none; }
+    .answer-card.wrong { background: #ffd8d1; border-color: #e0533f; box-shadow: none; animation: shake .3s ease; }
+    .answer-card.faded { opacity: .5; }
+    .feedback { min-height: 52px; margin: 24px 0 0; text-align: center; }
+    .verdict { margin: 0 0 4px; font: 12px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .verdict.success { color: #2d7d58; } .verdict.error { color: #b8392b; }
+    .fact { margin: 0; font: 700 15px/1.5 Manrope, sans-serif; }
+    .next-button { display: block; margin: 14px auto 0; padding: 13px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--white); cursor: pointer; font: 800 13px Manrope, sans-serif; text-transform: uppercase; }
+    .next-button:hover { background: var(--coral); border-color: var(--coral); }
+    .result-button { padding: 10px 16px; border: 1px solid var(--coral); background: var(--coral); color: white; cursor: pointer; font: 800 12px Manrope, sans-serif; text-transform: uppercase; }
+    .result-button:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
+    .copy-button { border-color: var(--ink); background: var(--ink); }
+    .hidden { display: none; }
+    .game-over { max-width: 520px; margin: 0 auto; padding: 34px 28px 30px; border: 1px solid var(--ink); background: var(--white); box-shadow: 8px 8px 0 var(--ink); text-align: center; }
+    .final-score { margin: 6px 0 4px; font: 84px/1 'Archivo Black', sans-serif; letter-spacing: -.04em; }
+    #finalTotal { color: var(--muted); font-size: .5em; }
+    .final-grid { margin: 0 0 14px; font-size: 20px; letter-spacing: 2px; }
+    .final-verdict { margin: 0 0 26px; font: 800 17px/1.4 Manrope, sans-serif; }
+    .final-share { display: grid; gap: 10px; }
+    .final-share .result-button { width: 100%; padding: 17px 20px; font-size: 16px; }
+    .play-again { margin-top: 28px; padding: 10px 16px; border: 1px solid var(--muted); background: transparent; color: var(--muted); cursor: pointer; font: 700 12px Manrope, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    .play-again:hover, .play-again.confirm { border-color: var(--ink); color: var(--ink); }
+    .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
+    @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+    @media (max-width: 700px) { main { padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .question { font-size: 21px; } .cards { grid-template-columns: minmax(0, 1fr); } }
+    @media (max-width: 480px) { h1 { font-size: 30px; } .answer-card { min-height: 54px; padding: 8px 14px; font-size: 15px; } .game-over { padding: 28px 18px 24px; box-shadow: 5px 5px 0 var(--ink); } .final-score { font-size: 64px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="site-menu"></div>
+    <header>
+      <div><p class="kicker">Unrivaled / trivia</p><h1>Stat sheet.</h1><p class="intro">Ten questions on Unrivaled's stat leaders and standings. One guess per question.</p></div>
+      <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">correct</span></div><div><span id="misses" class="score-number">0</span><span class="score-label">missed</span></div></div>
+    </header>
+    <section id="playArea" aria-labelledby="question">
+      <div class="game-bar"><span id="questionTag" class="tag"></span><span id="roundLabel" class="round-label"></span></div>
+      <h2 id="question" class="question"></h2>
+      <div id="answerCards" class="cards"></div>
+      <div class="feedback" role="status" aria-live="polite"><p id="verdict" class="verdict"></p><p id="fact" class="fact"></p></div>
+      <button id="nextButton" class="next-button hidden" type="button">Next question</button>
+    </section>
+    <section id="gameOver" class="game-over hidden" aria-labelledby="final-heading">
+      <p class="kicker" id="final-heading">Game over / final score</p>
+      <p class="final-score"><span id="finalScore">0</span><span id="finalTotal">/10</span></p>
+      <p id="finalGrid" class="final-grid" aria-hidden="true"></p>
+      <p id="finalVerdict" class="final-verdict"></p>
+      <div class="final-share"><button id="finalShare" class="result-button" type="button">Share your score</button><button id="finalCopy" class="result-button copy-button" type="button">Copy score</button></div>
+      <button id="playAgain" class="play-again" type="button">Play again</button>
+    </section>
+    <p class="fan-note">Fan-made game. Not affiliated with Unrivaled. Stats from <a href="https://www.unrivaled.basketball/stats" style="color:inherit">unrivaled.basketball</a>.</p>
+  </main>
+  <script src="trivia.js?v=1"></script>
+  <script>
+    const QUESTIONS_PER_GAME = 10;
+    const CHOICES = 4;
+    // How each stat reads in a question and in the answer fact
+    const STATS = {
+      PTS: { total: 'scored the most total points', perGame: 'averaged the most points per game', did: 'scored', noun: 'points' },
+      AST: { total: 'had the most total assists', perGame: 'averaged the most assists per game', did: 'had', noun: 'assists' },
+      '3PM': { total: 'made the most 3-pointers', perGame: 'made the most 3-pointers per game', did: 'made', noun: '3-pointers' },
+      GW: { total: 'hit the most game-winners', did: 'hit', noun: 'game-winners' },
+      REB: { total: 'grabbed the most total rebounds', perGame: 'averaged the most rebounds per game', did: 'grabbed', noun: 'rebounds' },
+      BLK: { total: 'had the most total blocks', perGame: 'averaged the most blocks per game', did: 'had', noun: 'blocks' },
+      STL: { total: 'had the most total steals', perGame: 'averaged the most steals per game', did: 'had', noun: 'steals' },
+      MIN: { total: 'played the most total minutes', perGame: 'averaged the most minutes per game', did: 'played', noun: 'minutes' }
+    };
+    const TAGS = { PTS: 'scoring', AST: 'assists', '3PM': '3-pointers', GW: 'clutch', REB: 'rebounding', BLK: 'blocks', STL: 'steals', MIN: 'minutes' };
+    const questionTag = document.getElementById('questionTag'); const questionText = document.getElementById('question'); const answerCards = document.getElementById('answerCards');
+    const verdict = document.getElementById('verdict'); const fact = document.getElementById('fact'); const nextButton = document.getElementById('nextButton');
+    const scoreDisplay = document.getElementById('score'); const missesDisplay = document.getElementById('misses');
+    const playArea = document.getElementById('playArea'); const gameOverPanel = document.getElementById('gameOver'); const playAgainButton = document.getElementById('playAgain');
+    const finalShare = document.getElementById('finalShare'); const finalCopy = document.getElementById('finalCopy');
+    let questions = []; let questionIndex = 0; let score = 0; let misses = 0; let results = [];
+    function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
+
+    // Every question in the bank. Leaders tied for first are skipped so each question has one right answer.
+    function buildBank() {
+      const bank = [];
+      triviaData.leaders.forEach(({ season, perGame, total }) => {
+        [['total', total], ['perGame', perGame]].forEach(([mode, categories]) => {
+          Object.entries(categories || {}).forEach(([stat, entries]) => {
+            const words = STATS[stat]; if (!words || !words[mode]) return;
+            const leader = entries[0]; if (!leader || leader.rank !== 1 || entries.filter(e => e.rank === 1).length > 1) return;
+            const others = entries.filter(e => e.rank > 1 && e.value !== leader.value && e.name !== leader.name);
+            if (others.length < CHOICES - 1) return;
+            bank.push({
+              key: `${season}-${stat}`, tag: `${season} / ${TAGS[stat]}`,
+              text: `Who ${words[mode]} in the ${season} season?`,
+              answer: leader.name, options: [leader.name, ...shuffle(others).slice(0, CHOICES - 1).map(e => e.name)],
+              fact: mode === 'total' ? `${leader.name} (${leader.team}) ${words.did} ${leader.value} ${words.noun}.` : `${leader.name} (${leader.team}) averaged ${leader.value} ${words.noun} per game.`
+            });
+          });
+        });
+      });
+      triviaData.standings.forEach(({ season, teams }) => {
+        const record = t => `${t.team} went ${t.w}-${t.l}`;
+        const signed = n => (n > 0 ? `+${n}` : `${n}`);
+        [
+          { pick: t => t.w, best: 'max', text: 'Which club had the best regular-season record', fact: t => `${record(t)}.` },
+          { pick: t => t.w, best: 'min', text: 'Which club had the worst regular-season record', fact: t => `${record(t)}.` },
+          { pick: t => t.pf, best: 'max', text: 'Which club scored the most points', fact: t => `${t.team} scored ${t.pf} points.` },
+          { pick: t => t.pa, best: 'min', text: 'Which club allowed the fewest points', fact: t => `${t.team} allowed ${t.pa} points.` },
+          { pick: t => t.diff, best: 'max', text: 'Which club had the best point differential', fact: t => `${t.team} finished ${signed(t.diff)}.` }
+        ].forEach(q => {
+          const values = teams.map(q.pick); const target = q.best === 'max' ? Math.max(...values) : Math.min(...values);
+          const winners = teams.filter(t => q.pick(t) === target); if (winners.length !== 1) return;
+          const others = teams.filter(t => t !== winners[0]).map(t => t.team);
+          bank.push({ key: `${season}-standings-${q.text}`, tag: `${season} / standings`, text: `${q.text} in ${season}?`, answer: winners[0].team, options: [winners[0].team, ...shuffle(others).slice(0, CHOICES - 1)], fact: q.fact(winners[0]) });
+        });
+      });
+      return bank;
+    }
+    // One question per season+stat per game, so per-game and total versions of the same stat don't both show up
+    function pickQuestions() {
+      const picked = []; const used = new Set();
+      for (const q of shuffle(buildBank())) { if (used.has(q.key)) continue; used.add(q.key); picked.push(q); if (picked.length === QUESTIONS_PER_GAME) break; }
+      return picked;
+    }
+    function showQuestion() {
+      const q = questions[questionIndex];
+      questionTag.textContent = q.tag; questionText.textContent = q.text;
+      document.getElementById('roundLabel').textContent = `Question ${questionIndex + 1} of ${questions.length}`;
+      answerCards.replaceChildren(...shuffle(q.options).map(option => { const card = document.createElement('button'); card.className = 'answer-card'; card.type = 'button'; card.textContent = option; card.addEventListener('click', () => answer(card, option)); return card; }));
+      verdict.textContent = ''; verdict.className = 'verdict'; fact.textContent = ''; nextButton.classList.add('hidden');
+    }
+    function answer(card, option) {
+      const q = questions[questionIndex]; const right = option === q.answer;
+      answerCards.querySelectorAll('button').forEach(button => { button.disabled = true; if (button.textContent === q.answer) button.classList.add('correct'); else if (button !== card) button.classList.add('faded'); });
+      if (right) { score += 1; scoreDisplay.textContent = score; } else { card.classList.add('wrong'); misses += 1; missesDisplay.textContent = misses; }
+      results.push(right);
+      verdict.textContent = right ? 'Correct' : `Not quite. It was ${q.answer}.`; verdict.className = `verdict ${right ? 'success' : 'error'}`; fact.textContent = q.fact;
+      nextButton.textContent = questionIndex === questions.length - 1 ? 'See final score' : 'Next question'; nextButton.classList.remove('hidden');
+    }
+    function nextQuestion() { questionIndex += 1; if (questionIndex === questions.length) showGameOver(); else showQuestion(); }
+    function newGame() { questions = pickQuestions(); questionIndex = 0; score = 0; misses = 0; results = []; scoreDisplay.textContent = 0; missesDisplay.textContent = 0; showQuestion(); }
+    function resultGrid() { return results.map(right => (right ? '🟪' : '⬜')).join(''); }
+    function showGameOver() {
+      const total = questions.length;
+      document.getElementById('finalScore').textContent = score; document.getElementById('finalTotal').textContent = `/${total}`;
+      document.getElementById('finalGrid').textContent = resultGrid();
+      document.getElementById('finalVerdict').textContent = score === total ? 'A perfect stat sheet. You might work for the league.' : score >= total - 2 ? 'Box-score brain. Seriously impressive.' : score >= total / 2 ? 'Solid. You clearly watch the games.' : 'Tough questions. Time to study the stat sheet.';
+      finalShare.textContent = 'Share your score'; finalCopy.textContent = 'Copy score'; resetPlayAgain();
+      playArea.classList.add('hidden'); gameOverPanel.classList.remove('hidden');
+      gameOverPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Play again takes two taps so a stray tap can't wipe the final score
+    let playAgainTimer = null;
+    function resetPlayAgain() { clearTimeout(playAgainTimer); playAgainButton.textContent = 'Play again'; playAgainButton.classList.remove('confirm'); }
+    function playAgain() {
+      if (!playAgainButton.classList.contains('confirm')) { playAgainButton.textContent = 'Tap again to start over'; playAgainButton.classList.add('confirm'); playAgainTimer = setTimeout(resetPlayAgain, 4000); return; }
+      resetPlayAgain(); gameOverPanel.classList.add('hidden'); playArea.classList.remove('hidden'); newGame(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function scoreText(includeLink) { return `Unrivaled Trivia\n${score}/${questions.length} correct\n${resultGrid()}${includeLink ? `\n${location.href}` : ''}`; }
+    async function shareScore(button) { try { if (navigator.share) await navigator.share({ title: 'Unrivaled Trivia', text: scoreText(true) }); else await navigator.clipboard.writeText(scoreText(true)); button.textContent = navigator.share ? 'Score shared' : 'Link copied'; } catch { button.textContent = 'Share canceled'; } }
+    async function copyScore(button) { try { await navigator.clipboard.writeText(scoreText(false)); button.textContent = 'Score copied'; } catch { button.textContent = 'Copy unavailable'; } }
+    finalShare.addEventListener('click', () => shareScore(finalShare)); finalCopy.addEventListener('click', () => copyScore(finalCopy));
+    nextButton.addEventListener('click', nextQuestion); playAgainButton.addEventListener('click', playAgain);
+    newGame();
+  </script>
+  <script src="menu.js"></script>
+</body>
+</html>

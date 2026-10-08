@@ -3,7 +3,8 @@
   var ITEMS = [
     { f: 'index.html', l: 'Hub' },
     { f: 'flashcard.html', l: '01 / Face Match' },
-    { f: 'teams.html', l: '02 / Logo Match' }
+    { f: 'teams.html', l: '02 / Logo Match' },
+    { f: 'trivia.html', l: '03 / Stat Sheet Trivia' }
   ];
 
   var CSS = [
