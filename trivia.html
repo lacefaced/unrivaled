@@ -23,10 +23,10 @@
     .tag { display: inline-block; padding: 4px 7px; border: 1px solid var(--ink); background: var(--mint); font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
     .round-label { color: var(--muted); font: 12px 'DM Mono', monospace; }
     .question { margin: 0 0 22px; font: 800 26px/1.3 Manrope, sans-serif; }
-    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     button { font: inherit; }
     button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
-    .answer-card { display: flex; align-items: center; width: 100%; min-height: 64px; padding: 10px 18px; border: 1px solid var(--ink); color: var(--ink); background: var(--white); box-shadow: 0 8px 0 rgba(23,34,44,.08); text-align: left; cursor: pointer; font: 800 16px Manrope, sans-serif; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .answer-card { display: flex; align-items: center; width: 100%; min-height: 48px; padding: 8px 14px; border: 1px solid var(--ink); color: var(--ink); background: var(--white); box-shadow: 0 8px 0 rgba(23,34,44,.08); text-align: left; cursor: pointer; font: 800 15px Manrope, sans-serif; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
     .answer-card:hover:not(:disabled) { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 rgba(23,34,44,.14); }
     .answer-card:disabled { cursor: default; }
     .answer-card.correct { background: var(--mint); border-color: #5c9c7e; box-shadow: none; transform: none; }
@@ -54,14 +54,14 @@
     .fan-note { margin: 40px 0 0; color: var(--muted); font: 10px 'DM Mono', monospace; text-align: center; letter-spacing: .06em; }
     @keyframes shake { 25% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
     @media (max-width: 700px) { main { padding-top: 24px; } header { display: block; margin-bottom: 30px; } h1 { font-size: 34px; } .intro { max-width: none; margin-bottom: 20px; } .scoreboard { width: fit-content; } .question { font-size: 21px; } .cards { grid-template-columns: minmax(0, 1fr); } }
-    @media (max-width: 480px) { h1 { font-size: 30px; } .answer-card { min-height: 54px; padding: 8px 14px; font-size: 15px; } .game-over { padding: 28px 18px 24px; box-shadow: 5px 5px 0 var(--ink); } .final-score { font-size: 64px; } }
+    @media (max-width: 480px) { h1 { font-size: 30px; } .answer-card { min-height: 44px; padding: 7px 12px; font-size: 14px; } .game-over { padding: 28px 18px 24px; box-shadow: 5px 5px 0 var(--ink); } .final-score { font-size: 64px; } }
   </style>
 </head>
 <body>
   <main>
     <div id="site-menu"></div>
     <header>
-      <div><p class="kicker">Unrivaled / trivia</p><h1>Stat sheet.</h1><p class="intro">Ten questions on Unrivaled's stat leaders and standings. One guess per question.</p></div>
+      <div><p class="kicker">Unrivaled / trivia</p><h1>Trivia time.</h1><p class="intro">Ten questions on Unrivaled's <span id="seasonName">2026</span> season: stat leaders, standings and the 1-on-1 tournament. One guess per question.</p></div>
       <div class="scoreboard" aria-label="Game score"><div><span id="score" class="score-number">0</span><span class="score-label">correct</span></div><div><span id="misses" class="score-number">0</span><span class="score-label">missed</span></div></div>
     </header>
     <section id="playArea" aria-labelledby="question">
@@ -97,12 +97,44 @@
       MIN: { total: 'played the most total minutes', perGame: 'averaged the most minutes per game', did: 'played', noun: 'minutes' }
     };
     // Hand-written questions for moments the stat leaderboards don't capture. Each fact is checked against unrivaled.basketball.
+    // Questions sharing a key are alternates; at most one of them shows up per game.
     const SPOTLIGHT_QUESTIONS = [
       {
-        key: 'mabrey-47-philly', tag: '2026 / record book',
+        season: 2026, key: 'mabrey-47-philly', tag: 'record book',
         text: 'Marina Mabrey set Unrivaled\'s single-game scoring record in Philadelphia on Jan. 30, 2026. How many points did she score?',
         answer: '47 points', options: ['47 points', '41 points', '44 points', '50 points'],
         fact: 'Mabrey scored 47 on 18-of-28 shooting in Lunar Owls\' 85-75 win over Rose. She also set league records for 3-pointers in a game (10) and first-quarter points (27).'
+      },
+      // 2026 1 on 1 Tournament, from unrivaled.basketball/news (Feb. 2026)
+      {
+        season: 2026, key: '1v1-final', order: 4, tag: '1-on-1 tournament',
+        text: 'Who won the 2026 Unrivaled 1-on-1 tournament, earning the title "The One" and the $200,000 prize?',
+        answer: 'Chelsea Gray', options: ['Chelsea Gray', 'Allisha Gray', 'Kelsey Plum', 'Aliyah Boston'],
+        fact: 'Chelsea Gray beat Allisha Gray 2 games to 1 in the best-of-three final, winning the deciding game 7-6 after trailing 6-0.'
+      },
+      {
+        season: 2026, key: '1v1-final', order: 4, tag: '1-on-1 tournament',
+        text: 'Chelsea Gray won the 2026 1-on-1 tournament. Who did she beat in the best-of-three final?',
+        answer: 'Allisha Gray', options: ['Allisha Gray', 'Kelsey Plum', 'Aliyah Boston', 'Paige Bueckers'],
+        fact: 'The Gray vs. Gray final went the distance. Allisha won Game 1 7-0, then Chelsea took the next two, 8-3 and 7-6.'
+      },
+      {
+        season: 2026, key: '1v1-semi', order: 2, tag: '1-on-1 tournament',
+        text: 'Kelsey Plum jumped out to an 8\u20110 lead on Chelsea Gray in the 2026 1-on-1 semifinals. How did it end?',
+        answer: 'Gray won 12-8', options: ['Gray won 12-8', 'Plum won 11-8', 'Gray won 12-11', 'Plum won 12-10'],
+        fact: 'Chelsea Gray scored 12 unanswered points to win 12-8.'
+      },
+      {
+        season: 2026, key: '1v1-quarter', order: 1, tag: '1-on-1 tournament',
+        text: 'Who did Chelsea Gray beat 11-2 in the 2026 1-on-1 quarterfinals?',
+        answer: 'Paige Bueckers', options: ['Paige Bueckers', 'Kelsey Mitchell', 'Aaliyah Edwards', 'Rhyne Howard'],
+        fact: 'Before that, Gray beat Natasha Cloud 11-10 and Jackie Young 12-6 in the first two rounds.'
+      },
+      {
+        season: 2026, key: '1v1-prize', order: 3, tag: '1-on-1 tournament',
+        text: 'The 2026 1-on-1 champion won $200,000. How much did the runner-up take home?',
+        answer: '$50,000', options: ['$50,000', '$25,000', '$100,000', '$75,000'],
+        fact: 'The runner-up won $50,000, and each losing semifinalist won $25,000.'
       }
     ];
     const TAGS = { PTS: 'scoring', AST: 'assists', '3PM': '3-pointers', GW: 'clutch', REB: 'rebounding', BLK: 'blocks', STL: 'steals', MIN: 'minutes' };
@@ -115,9 +147,11 @@
     function shuffle(items) { const copy = [...items]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; }
 
     // Every question in the bank. Leaders tied for first are skipped so each question has one right answer.
+    const SEASON = triviaData.standings.length ? Math.max(...triviaData.standings.map(s => s.season)) : Math.max(...triviaData.leaders.map(s => s.season));
+    document.getElementById('seasonName').textContent = SEASON;
     function buildBank() {
       const bank = [];
-      triviaData.leaders.forEach(({ season, perGame, total }) => {
+      triviaData.leaders.filter(s => s.season === SEASON).forEach(({ season, perGame, total }) => {
         [['total', total], ['perGame', perGame]].forEach(([mode, categories]) => {
           Object.entries(categories || {}).forEach(([stat, entries]) => {
             const words = STATS[stat]; if (!words || !words[mode]) return;
@@ -125,7 +159,7 @@
             const others = entries.filter(e => e.rank > 1 && e.value !== leader.value && e.name !== leader.name);
             if (others.length < CHOICES - 1) return;
             bank.push({
-              key: `${season}-${stat}`, tag: `${season} / ${TAGS[stat]}`,
+              key: `${season}-${stat}-${leader.name}`, tag: TAGS[stat],
               text: `Who ${words[mode]} in the ${season} season?`,
               answer: leader.name, options: [leader.name, ...shuffle(others).slice(0, CHOICES - 1).map(e => e.name)],
               fact: mode === 'total' ? `${leader.name} (${leader.team}) ${words.did} ${leader.value} ${words.noun}.` : `${leader.name} (${leader.team}) averaged ${leader.value} ${words.noun} per game.`
@@ -133,7 +167,7 @@
           });
         });
       });
-      triviaData.standings.forEach(({ season, teams }) => {
+      triviaData.standings.filter(s => s.season === SEASON).forEach(({ season, teams }) => {
         const record = t => `${t.team} went ${t.w}-${t.l}`;
         const signed = n => (n > 0 ? `+${n}` : `${n}`);
         [
@@ -146,16 +180,20 @@
           const values = teams.map(q.pick); const target = q.best === 'max' ? Math.max(...values) : Math.min(...values);
           const winners = teams.filter(t => q.pick(t) === target); if (winners.length !== 1) return;
           const others = teams.filter(t => t !== winners[0]).map(t => t.team);
-          bank.push({ key: `${season}-standings-${q.text}`, tag: `${season} / standings`, text: `${q.text} in ${season}?`, answer: winners[0].team, options: [winners[0].team, ...shuffle(others).slice(0, CHOICES - 1)], fact: q.fact(winners[0]) });
+          bank.push({ key: `${season}-standings-${q.text}`, tag: 'standings', text: `${q.text} in ${season}?`, answer: winners[0].team, options: [winners[0].team, ...shuffle(others).slice(0, CHOICES - 1)], fact: q.fact(winners[0]) });
         });
       });
-      SPOTLIGHT_QUESTIONS.forEach(q => bank.push({ ...q }));
+      SPOTLIGHT_QUESTIONS.filter(q => q.season === SEASON).forEach(q => bank.push({ ...q }));
       return bank;
     }
-    // One question per season+stat per game, so per-game and total versions of the same stat don't both show up
+    // One question per key per game: per-game and total versions of a stat only both appear when their answers differ
     function pickQuestions() {
       const picked = []; const used = new Set();
       for (const q of shuffle(buildBank())) { if (used.has(q.key)) continue; used.add(q.key); picked.push(q); if (picked.length === QUESTIONS_PER_GAME) break; }
+      // Questions with an "order" (the 1-on-1 bracket) keep their random slots but play in bracket order, so a later round never spoils an earlier one
+      const slots = picked.map((q, i) => (q.order ? i : -1)).filter(i => i >= 0);
+      const ordered = slots.map(i => picked[i]).sort((a, b) => a.order - b.order);
+      slots.forEach((slot, n) => { picked[slot] = ordered[n]; });
       return picked;
     }
     function showQuestion() {
@@ -180,7 +218,7 @@
       const total = questions.length;
       document.getElementById('finalScore').textContent = score; document.getElementById('finalTotal').textContent = `/${total}`;
       document.getElementById('finalGrid').textContent = resultGrid();
-      document.getElementById('finalVerdict').textContent = score === total ? 'A perfect stat sheet. You might work for the league.' : score >= total - 2 ? 'Box-score brain. Seriously impressive.' : score >= total / 2 ? 'Solid. You clearly watch the games.' : 'Tough questions. Time to study the stat sheet.';
+      document.getElementById('finalVerdict').textContent = score === total ? 'Perfect score. You might work for the league.' : score >= total - 2 ? 'Box-score brain. Seriously impressive.' : score >= total / 2 ? 'Solid. You clearly watch the games.' : 'Tough questions. Time to study the stat sheet.';
       finalShare.textContent = 'Share your score'; finalCopy.textContent = 'Copy score'; resetPlayAgain();
       playArea.classList.add('hidden'); gameOverPanel.classList.remove('hidden');
       gameOverPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
