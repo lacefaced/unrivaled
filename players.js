@@ -2,529 +2,595 @@ const allPlayers = [
   {
     "id": "shakira-austin-3z8uacbqmewp",
     "name": "Shakira Austin",
-    "team": "",
+    "team": "Rose",
     "position": "F",
     "height": "6-5",
     "jersey": "",
     "wnbaTeam": "Washington Mystics",
     "profile": "https://www.unrivaled.basketball/player/shakira-austin-3z8uacbqmewp",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/shakira-austin/images/headshot.jpg?v=1767477910175"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/shakira-austin/images/2027/rose-headshot.1793838163956.webp"
   },
   {
     "id": "monique-billings-3i2p8x364hv1",
     "name": "Monique Billings",
-    "team": "",
+    "team": "Breeze",
     "position": "F",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "Indiana Fever",
     "profile": "https://www.unrivaled.basketball/player/monique-billings-3i2p8x364hv1",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/monique-billings/images/headshot.jpg?v=1767477441875"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/monique-billings/images/2027/breeze-headshot.1793838163956.webp"
   },
   {
     "id": "cameron-brink-9z9kphgbukqm",
     "name": "Cameron Brink",
-    "team": "",
+    "team": "Hive",
     "position": "F",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "Los Angeles Sparks",
     "profile": "https://www.unrivaled.basketball/player/cameron-brink-9z9kphgbukqm",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/cameron-brink/images/headshot.jpg?v=1767477189700"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/cameron-brink/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "paige-bueckers-osz1lblmgodi",
     "name": "Paige Bueckers",
-    "team": "",
+    "team": "Breeze",
     "position": "G",
     "height": "6-0",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/paige-bueckers-osz1lblmgodi",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/paige-bueckers/images/headshot.jpg?v=1767477248431"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/paige-bueckers/images/2027/breeze-headshot.1793838163956.webp"
   },
   {
     "id": "rae-burrell-2pg47b3qi9z6",
     "name": "Rae Burrell",
-    "team": "",
+    "team": "Hive",
     "position": "W",
     "height": "6-2",
     "jersey": "",
     "wnbaTeam": "Los Angeles Sparks",
     "profile": "https://www.unrivaled.basketball/player/rae-burrell-2pg47b3qi9z6",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/rae-burrell/images/headshot.jpg?v=1767478268108"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/rae-burrell/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "veronica-burton-1zy3eeoe1a2m",
     "name": "Veronica Burton",
-    "team": "",
+    "team": "Mist",
     "position": "G",
     "height": "5-9",
     "jersey": "",
     "wnbaTeam": "Golden State Valkyries",
     "profile": "https://www.unrivaled.basketball/player/veronica-burton-1zy3eeoe1a2m",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/veronica-burton/images/headshot.jpg?v=1767477769734"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/veronica-burton/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "jordin-canada-t38wmgweal5r",
     "name": "Jordin Canada",
-    "team": "",
+    "team": "Vinyl",
     "position": "G",
     "height": "5-6",
     "jersey": "",
     "wnbaTeam": "Atlanta Dream",
     "profile": "https://www.unrivaled.basketball/player/jordin-canada-t38wmgweal5r",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/jordin-canada/images/headshot.jpg?v=1767477620203"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/jordin-canada/images/2027/vinyl-headshot.1793838163956.webp"
   },
   {
     "id": "bridget-carleton-vwkebljbwhyb",
     "name": "Bridget Carleton",
-    "team": "",
+    "team": "Mist",
     "position": "W",
     "height": "6-2",
     "jersey": "",
     "wnbaTeam": "Portland Fire",
     "profile": "https://www.unrivaled.basketball/player/bridget-carleton-vwkebljbwhyb",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/3906972.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/bridget-carleton/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "dijonai-carrington-pcmzjnqrhipe",
     "name": "DiJonai Carrington",
-    "team": "",
+    "team": "Breeze",
     "position": "W",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Chicago Sky",
     "profile": "https://www.unrivaled.basketball/player/dijonai-carrington-pcmzjnqrhipe",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dijonai-carrington/images/headshot.jpg?v=1738721358602"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dijonai-carrington/images/2027/breeze-headshot.1793838163956.webp"
+  },
+  {
+    "id": "kaila-charles-n6wl5unyq5ct",
+    "name": "Kaila Charles",
+    "team": "Player Pool",
+    "position": "",
+    "height": "6-1",
+    "jersey": "",
+    "wnbaTeam": "Golden State Valkyries",
+    "profile": "https://www.unrivaled.basketball/player/kaila-charles-n6wl5unyq5ct",
+    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4065780.png"
   },
   {
     "id": "kaitlyn-chen-228eqzgjykl3",
     "name": "Kaitlyn Chen",
-    "team": "",
+    "team": "Breeze",
     "position": "G",
     "height": "5-9",
     "jersey": "",
     "wnbaTeam": "Golden State Valkyries",
     "profile": "https://www.unrivaled.basketball/player/kaitlyn-chen-228eqzgjykl3",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4899328.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kaitlyn-chen/images/2027/breeze-headshot.1793838163956.webp"
   },
   {
     "id": "sonia-citron-9e602707s6ru",
     "name": "Sonia Citron",
-    "team": "",
+    "team": "Hive",
     "position": "W",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Washington Mystics",
     "profile": "https://www.unrivaled.basketball/player/sonia-citron-9e602707s6ru",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/sonia-citron/images/headshot.jpg?v=1767477456232"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/sonia-citron/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "natasha-cloud-pwrq626gh7a3",
     "name": "Natasha Cloud",
-    "team": "",
+    "team": "Phantom",
     "position": "G",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "Chicago Sky",
     "profile": "https://www.unrivaled.basketball/player/natasha-cloud-pwrq626gh7a3",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/natasha-cloud/images/headshot.jpg?v=1767477849957"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/natasha-cloud/images/2027/phantom-headshot.1793838163956.webp"
   },
   {
     "id": "napheesa-collier-bcggk95vccg5",
     "name": "Napheesa Collier",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "F",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Minnesota Lynx",
     "profile": "https://www.unrivaled.basketball/player/napheesa-collier-bcggk95vccg5",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/napheesa-collier/images/headshot.jpg?v=1767477668619"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/napheesa-collier/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "kahleah-copper-2k18gfn8wsmb",
     "name": "Kahleah Copper",
-    "team": "",
+    "team": "Breeze",
     "position": "W",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Phoenix Mercury",
     "profile": "https://www.unrivaled.basketball/player/kahleah-copper-2k18gfn8wsmb",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kahleah-copper/images/headshot.jpg?v=1767477918565"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kahleah-copper/images/2027/breeze-headshot.1793838163956.webp"
   },
   {
     "id": "skylar-diggins-rkjud3az38vq",
     "name": "Skylar Diggins",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "G",
     "height": "5-9",
     "jersey": "",
     "wnbaTeam": "Chicago Sky",
     "profile": "https://www.unrivaled.basketball/player/skylar-diggins-rkjud3az38vq",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/skylar-diggins/images/headshot.jpg?v=1767477677611"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/skylar-diggins/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "aaliyah-edwards-vuytsg7bv3o1",
     "name": "Aaliyah Edwards",
-    "team": "",
+    "team": "Phantom",
     "position": "F",
     "height": "6-3",
     "jersey": "",
     "wnbaTeam": "Connecticut Sun",
     "profile": "https://www.unrivaled.basketball/player/aaliyah-edwards-vuytsg7bv3o1",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aaliyah-edwards/images/headshot.jpg?v=1767477687510"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aaliyah-edwards/images/2027/phantom-headshot.1793838163956.webp"
   },
   {
     "id": "temi-fagbenle-jofrbvhakq4h",
     "name": "Temi Fágbénlé",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "F",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/temi-fagbenle-jofrbvhakq4h",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/temi-fagbenle/images/headshot.png?v=1767900426323"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/temi-fagbenle/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "chelsea-gray-r6go6kmzp23j",
     "name": "Chelsea Gray",
-    "team": "",
+    "team": "Rose",
     "position": "G",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Las Vegas Aces",
     "profile": "https://www.unrivaled.basketball/player/chelsea-gray-r6go6kmzp23j",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/chelsea-gray/images/headshot.jpg?v=1767477920415"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/chelsea-gray/images/2027/rose-headshot.1793838163956.webp"
   },
   {
     "id": "allisha-gray-5df4bg3v8c9g",
     "name": "Allisha Gray",
-    "team": "",
+    "team": "Vinyl",
     "position": "G",
     "height": "6-0",
     "jersey": "",
     "wnbaTeam": "Atlanta Dream",
     "profile": "https://www.unrivaled.basketball/player/allisha-gray-5df4bg3v8c9g",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/allisha-gray/images/headshot.jpg?v=1767479359378"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/allisha-gray/images/2027/vinyl-headshot.1793838163956.webp"
+  },
+  {
+    "id": "brittney-griner-d1eqm09591g4",
+    "name": "Brittney Griner",
+    "team": "Player Pool",
+    "position": "F",
+    "height": "6-9",
+    "jersey": "",
+    "wnbaTeam": "Connecticut Sun",
+    "profile": "https://www.unrivaled.basketball/player/brittney-griner-d1eqm09591g4",
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/brittney-griner/images/headshot.1793838163956.webp"
   },
   {
     "id": "dearica-hamby-4prx3vxu62om",
     "name": "Dearica Hamby",
-    "team": "",
+    "team": "Vinyl",
     "position": "F",
     "height": "6-3",
     "jersey": "",
     "wnbaTeam": "Los Angeles Sparks",
     "profile": "https://www.unrivaled.basketball/player/dearica-hamby-4prx3vxu62om",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dearica-hamby/images/headshot.jpg?v=1767478305619"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dearica-hamby/images/2027/vinyl-headshot.1793838163956.webp"
   },
   {
     "id": "isabelle-harrison-2nlgoan6wqjw",
     "name": "Isabelle Harrison",
-    "team": "",
+    "team": "Mist",
     "position": "F",
     "height": "6-5",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/isabelle-harrison-2nlgoan6wqjw",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/2566453.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/isabelle-harrison/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "tiffany-hayes-pfchl0hhtbmu",
     "name": "Tiffany Hayes",
-    "team": "",
+    "team": "Phantom",
     "position": "G",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "Golden State Valkyries",
     "profile": "https://www.unrivaled.basketball/player/tiffany-hayes-pfchl0hhtbmu",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/tiffany-hayes/images/headshot.jpg?v=1767479257583"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/tiffany-hayes/images/2027/phantom-headshot.1793838163956.webp"
   },
   {
     "id": "natisha-hiedeman-okjofgwlkna9",
     "name": "Natisha Hiedeman",
-    "team": "",
+    "team": "Hive",
     "position": "G",
     "height": "5-8",
     "jersey": "",
     "wnbaTeam": "Seattle Storm",
     "profile": "https://www.unrivaled.basketball/player/natisha-hiedeman-okjofgwlkna9",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/natisha-hiedeman/images/headshot.jpg?v=1767477467898"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/natisha-hiedeman/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "naz-hillmon-06yn0bxvvzhx",
     "name": "Naz Hillmon",
-    "team": "",
+    "team": "Hive",
     "position": "F",
     "height": "6-2",
     "jersey": "",
     "wnbaTeam": "Atlanta Dream",
     "profile": "https://www.unrivaled.basketball/player/naz-hillmon-06yn0bxvvzhx",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/naz-hillmon/images/headshot.jpg?v=1767477611125"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/naz-hillmon/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "rhyne-howard-4oadwt7gp636",
     "name": "Rhyne Howard",
-    "team": "",
+    "team": "Vinyl",
     "position": "W",
     "height": "6-2",
     "jersey": "",
     "wnbaTeam": "Atlanta Dream",
     "profile": "https://www.unrivaled.basketball/player/rhyne-howard-4oadwt7gp636",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/rhyne-howard/images/headshot.jpg?v=1767478308082"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/rhyne-howard/images/2027/vinyl-headshot.1793838163956.webp"
   },
   {
     "id": "lexie-hull-bh6vgd8htw6a",
     "name": "Lexie Hull",
-    "team": "",
+    "team": "Rose",
     "position": "W",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Indiana Fever",
     "profile": "https://www.unrivaled.basketball/player/lexie-hull-bh6vgd8htw6a",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/lexie-hull/images/headshot.jpg?v=1767477944760"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/lexie-hull/images/2027/rose-headshot.1793838163956.webp"
   },
   {
     "id": "aziaha-james-qkhnkbzlf4j2",
     "name": "Aziaha James",
-    "team": "",
+    "team": "Rose",
     "position": "G",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/aziaha-james-qkhnkbzlf4j2",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aziaha-james/images/headshot.jpg?v=1767477281608"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aziaha-james/images/2027/rose-headshot.1793838163956.webp"
+  },
+  {
+    "id": "gabriela-jaquez-4v5devkr83k6",
+    "name": "Gabriela Jaquez",
+    "team": "Player Pool",
+    "position": "",
+    "height": "6-0",
+    "jersey": "",
+    "wnbaTeam": "Chicago Sky",
+    "profile": "https://www.unrivaled.basketball/player/gabriela-jaquez-4v5devkr83k6",
+    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4858656.png"
   },
   {
     "id": "marine-johannes-0z40b9zire54",
     "name": "Marine Johannès",
-    "team": "",
+    "team": "Laces",
     "position": "G",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "New York Liberty",
     "profile": "https://www.unrivaled.basketball/player/marine-johannes-0z40b9zire54",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4038379.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/marine-johannes/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "flaujae-johnson-2j3q3ows2dkl",
     "name": "Flau'jae Johnson",
-    "team": "",
+    "team": "Vinyl",
     "position": "W",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "Seattle Storm",
     "profile": "https://www.unrivaled.basketball/player/flaujae-johnson-2j3q3ows2dkl",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4698736.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/flaujae-johnson/images/2027/vinyl-headshot.1793838163956.webp"
+  },
+  {
+    "id": "raven-johnson-0i2mc00o32bl",
+    "name": "Raven Johnson",
+    "team": "Player Pool",
+    "position": "",
+    "height": "5-8",
+    "jersey": "",
+    "wnbaTeam": "Indiana Fever",
+    "profile": "https://www.unrivaled.basketball/player/raven-johnson-0i2mc00o32bl",
+    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4433797.png"
+  },
+  {
+    "id": "taniya-latson-tt69n76wk6xf",
+    "name": "Ta'Niya Latson",
+    "team": "Player Pool",
+    "position": "",
+    "height": "5-8",
+    "jersey": "",
+    "wnbaTeam": "Las Vegas Aces",
+    "profile": "https://www.unrivaled.basketball/player/taniya-latson-tt69n76wk6xf",
+    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4609797.png"
   },
   {
     "id": "marina-mabrey-fj1hf0z16u7d",
     "name": "Marina Mabrey",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "W",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/marina-mabrey-fj1hf0z16u7d",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/marina-mabrey/images/headshot.jpg?v=1767477692641"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/marina-mabrey/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "dominique-malonga-15pjdtbbffgx",
     "name": "Dominique Malonga",
-    "team": "",
+    "team": "Breeze",
     "position": "F",
     "height": "6-6",
     "jersey": "",
     "wnbaTeam": "Seattle Storm",
     "profile": "https://www.unrivaled.basketball/player/dominique-malonga-15pjdtbbffgx",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dominique-malonga/images/headshot.jpg?v=1767477373485"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/dominique-malonga/images/2027/breeze-headshot.1793838163956.webp"
   },
   {
     "id": "kayla-mcbride-8jp766iviaj1",
     "name": "Kayla McBride",
-    "team": "",
+    "team": "Phantom",
     "position": "W",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Minnesota Lynx",
     "profile": "https://www.unrivaled.basketball/player/kayla-mcbride-8jp766iviaj1",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kayla-mcbride/images/headshot.jpg?v=1738721488557"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kayla-mcbride/images/2027/phantom-headshot.1793838163956.webp"
   },
   {
     "id": "olivia-miles-t56qpvaq0ryv",
     "name": "Olivia Miles",
-    "team": "",
+    "team": "Hive",
     "position": "G",
     "height": "5-10",
     "jersey": "",
     "wnbaTeam": "Minnesota Lynx",
     "profile": "https://www.unrivaled.basketball/player/olivia-miles-t56qpvaq0ryv",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4433791.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/olivia-miles/images/2027/hive-headshot.1793838163956.webp"
   },
   {
     "id": "aneesah-morrow-iwx9hxzuk8kj",
     "name": "Aneesah Morrow",
-    "team": "",
+    "team": "Vinyl",
     "position": "F",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/aneesah-morrow-iwx9hxzuk8kj",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4684384.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aneesah-morrow/images/2027/vinyl-headshot.1793838163956.webp"
+  },
+  {
+    "id": "olivia-nelson-ododa-ltnm91aads2i",
+    "name": "Olivia Nelson-Ododa",
+    "team": "Player Pool",
+    "position": "",
+    "height": "6-5",
+    "jersey": "",
+    "wnbaTeam": "Connecticut Sun",
+    "profile": "https://www.unrivaled.basketball/player/olivia-nelson-ododa-ltnm91aads2i",
+    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4398966.png"
   },
   {
     "id": "arike-ogunbowale-r9p1g69osavq",
     "name": "Arike Ogunbowale",
-    "team": "",
+    "team": "Mist",
     "position": "W",
     "height": "5-8",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/arike-ogunbowale-r9p1g69osavq",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/arike-ogunbowale/images/headshot.jpg?v=1767477796609"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/arike-ogunbowale/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "kelsey-plum-trxk8xrmxs29",
     "name": "Kelsey Plum",
-    "team": "",
+    "team": "Phantom",
     "position": "G",
     "height": "5-8",
     "jersey": "",
     "wnbaTeam": "Phoenix Mercury",
     "profile": "https://www.unrivaled.basketball/player/kelsey-plum-trxk8xrmxs29",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kelsey-plum/images/headshot.jpg?v=1767478086341"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kelsey-plum/images/2027/phantom-headshot.1793838163956.webp"
   },
   {
     "id": "kiki-rice-wzl0620iift5",
     "name": "Kiki Rice",
-    "team": "",
+    "team": "Mist",
     "position": "G",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/kiki-rice-wzl0620iift5",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4565505.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kiki-rice/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "satou-sabally-0ygbxjbwjcpd",
     "name": "Satou Sabally",
-    "team": "",
+    "team": "Laces",
     "position": "W",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "New York Liberty",
     "profile": "https://www.unrivaled.basketball/player/satou-sabally-0ygbxjbwjcpd",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/satou-sabally/images/headshot.jpg?v=1738721451865"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/satou-sabally/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "jessica-shepard-756yb020vyet",
     "name": "Jessica Shepard",
-    "team": "",
+    "team": "Laces",
     "position": "F",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/jessica-shepard-756yb020vyet",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/3906949.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/jessica-shepard/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "maddy-siegrist-2b11qo1xprtv",
     "name": "Maddy Siegrist",
-    "team": "",
+    "team": "Laces",
     "position": "W",
     "height": "6-2",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/maddy-siegrist-2b11qo1xprtv",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/maddy-siegrist/images/headshot.jpg?v=1767477596696"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/maddy-siegrist/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "breanna-stewart-lqj6yuo4sk42",
     "name": "Breanna Stewart",
-    "team": "",
+    "team": "Mist",
     "position": "F",
     "height": "6-4",
     "jersey": "",
     "wnbaTeam": "New York Liberty",
     "profile": "https://www.unrivaled.basketball/player/breanna-stewart-lqj6yuo4sk42",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/breanna-stewart/images/headshot.jpg?v=1767477811234"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/breanna-stewart/images/2027/mist-headshot.1793838163956.webp"
   },
   {
     "id": "brittney-sykes-5r0ujro9gsjp",
     "name": "Brittney Sykes",
-    "team": "",
+    "team": "Rose",
     "position": "W",
     "height": "5-9",
     "jersey": "",
     "wnbaTeam": "Toronto Tempo",
     "profile": "https://www.unrivaled.basketball/player/brittney-sykes-5r0ujro9gsjp",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/brittney-sykes/images/headshot.jpg?v=1767477574674"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/brittney-sykes/images/2027/rose-headshot.1793838163956.webp"
   },
   {
     "id": "sydney-taylor-dly9mrswsxoo",
     "name": "Sydney Taylor",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "G",
     "height": "5-9",
     "jersey": "",
     "wnbaTeam": "Chicago Sky",
     "profile": "https://www.unrivaled.basketball/player/sydney-taylor-dly9mrswsxoo",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4594786.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/sydney-taylor/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "kayla-thornton-mu518tg49vul",
     "name": "Kayla Thornton",
-    "team": "",
+    "team": "Rose",
     "position": "F",
     "height": "6-1",
     "jersey": "",
     "wnbaTeam": "Golden State Valkyries",
     "profile": "https://www.unrivaled.basketball/player/kayla-thornton-mu518tg49vul",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/2529622.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kayla-thornton/images/2027/rose-headshot.1793838163956.webp"
   },
   {
     "id": "gabby-williams-8qyinsyrymnw",
     "name": "Gabby Williams",
-    "team": "",
+    "team": "Laces",
     "position": "W",
     "height": "5-11",
     "jersey": "",
     "wnbaTeam": "Golden State Valkyries",
     "profile": "https://www.unrivaled.basketball/player/gabby-williams-8qyinsyrymnw",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/3142328.png"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/gabby-williams/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "courtney-williams-v723cso81wi3",
     "name": "Courtney Williams",
-    "team": "",
+    "team": "Lunar Owls",
     "position": "G",
     "height": "5-8",
     "jersey": "",
     "wnbaTeam": "Minnesota Lynx",
     "profile": "https://www.unrivaled.basketball/player/courtney-williams-v723cso81wi3",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/courtney-williams/images/headshot.jpg?v=1771538691081"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/courtney-williams/images/2027/lunar-owls-headshot.1793838163956.webp"
   },
   {
     "id": "jackie-young-cbba3mtca702",
     "name": "Jackie Young",
-    "team": "",
+    "team": "Laces",
     "position": "G",
     "height": "6-0",
     "jersey": "",
     "wnbaTeam": "Las Vegas Aces",
     "profile": "https://www.unrivaled.basketball/player/jackie-young-cbba3mtca702",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/jackie-young/images/headshot.jpg?v=1767477588586"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/jackie-young/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "li-yueru-biqged5f7r22",
     "name": "Li Yueru",
-    "team": "",
+    "team": "Phantom",
     "position": "F",
     "height": "6-7",
     "jersey": "",
     "wnbaTeam": "Dallas Wings",
     "profile": "https://www.unrivaled.basketball/player/li-yueru-biqged5f7r22",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/li-yueru/images/headshot.jpg?v=1767477815740"
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/li-yueru/images/2027/phantom-headshot.1793838163956.webp"
   }
 ];
