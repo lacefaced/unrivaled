@@ -550,17 +550,6 @@ const allPlayers = [
     "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/kayla-thornton/images/2027/rose-headshot.1793838163956.webp"
   },
   {
-    "id": "gabby-williams-8qyinsyrymnw",
-    "name": "Gabby Williams",
-    "team": "Laces",
-    "position": "W",
-    "height": "5-11",
-    "jersey": "",
-    "wnbaTeam": "Golden State Valkyries",
-    "profile": "https://www.unrivaled.basketball/player/gabby-williams-8qyinsyrymnw",
-    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/gabby-williams/images/2027/laces-headshot.1793838163956.webp"
-  },
-  {
     "id": "courtney-williams-v723cso81wi3",
     "name": "Courtney Williams",
     "team": "Lunar Owls",
@@ -570,6 +559,17 @@ const allPlayers = [
     "wnbaTeam": "Minnesota Lynx",
     "profile": "https://www.unrivaled.basketball/player/courtney-williams-v723cso81wi3",
     "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/courtney-williams/images/2027/lunar-owls-headshot.1793838163956.webp"
+  },
+  {
+    "id": "gabby-williams-8qyinsyrymnw",
+    "name": "Gabby Williams",
+    "team": "Laces",
+    "position": "W",
+    "height": "5-11",
+    "jersey": "",
+    "wnbaTeam": "Golden State Valkyries",
+    "profile": "https://www.unrivaled.basketball/player/gabby-williams-8qyinsyrymnw",
+    "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/gabby-williams/images/2027/laces-headshot.1793838163956.webp"
   },
   {
     "id": "jackie-young-cbba3mtca702",
