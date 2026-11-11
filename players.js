@@ -182,7 +182,7 @@ const allPlayers = [
     "position": "F",
     "height": "6-3",
     "jersey": "",
-    "wnbaTeam": "Connecticut Sun",
+    "wnbaTeam": "",
     "profile": "https://www.unrivaled.basketball/player/aaliyah-edwards-vuytsg7bv3o1",
     "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/aaliyah-edwards/images/2027/phantom-headshot.1793838163956.webp"
   },
@@ -226,7 +226,7 @@ const allPlayers = [
     "position": "F",
     "height": "6-9",
     "jersey": "",
-    "wnbaTeam": "Connecticut Sun",
+    "wnbaTeam": "",
     "profile": "https://www.unrivaled.basketball/player/brittney-griner-d1eqm09591g4",
     "headshot": "https://pub-ad8cc693759b4b55a181a76af041efa0.r2.dev/players/brittney-griner/images/headshot.1793838163956.webp"
   },
@@ -435,9 +435,9 @@ const allPlayers = [
     "position": "",
     "height": "6-5",
     "jersey": "",
-    "wnbaTeam": "Connecticut Sun",
+    "wnbaTeam": "",
     "profile": "https://www.unrivaled.basketball/player/olivia-nelson-ododa-ltnm91aads2i",
-    "headshot": "https://a.espncdn.com/i/headshots/wnba/players/full/4398966.png"
+    "headshot": ""
   },
   {
     "id": "arike-ogunbowale-r9p1g69osavq",
